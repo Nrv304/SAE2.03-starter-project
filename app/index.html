@@ -36,8 +36,8 @@
       // Vue (contient tout ce qui est relatif à l'affichage)
       window.V = {};
 
-      C.getAllMovies = function () {
-        let data = DataMovie.getAll();
+      C.getAllMovies = async function () {
+        let data = await DataMovie.getAll();
         V.renderMovies(data);
       };
       /**

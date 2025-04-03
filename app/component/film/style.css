@@ -1,7 +1,5 @@
-.film img{
-    height: 20rem;
-}
 .film {
+  position: relative;
   color: var(--clr-whitetxt);
   display: flex;
   gap: 0.5rem;
@@ -9,4 +7,48 @@
   align-items: center;
   justify-content: center;
   list-style: none;
+}
+
+.film__tumbnail {
+  position: relative;
+  display: inline-block;
+  height: 20rem;
+  width: auto;
+  overflow: hidden;
+}
+
+.film__tumbnail::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20rem;
+  background: linear-gradient(to top, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
+  z-index: 1;
+}
+
+.film__image {
+  display: block;
+  height: 20rem;
+  object-fit: cover;
+  position: relative;
+  z-index: 0;
+}
+
+.film__title {
+  position: absolute;
+  bottom: 0rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-white);
+  padding: 0.5rem 1rem;
+  max-width: 100%;
+  text-align: left;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  z-index: 2;
 }
