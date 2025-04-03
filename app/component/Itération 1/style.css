@@ -1,0 +1,12 @@
+.film img{
+    height: 20rem;
+}
+.film {
+  color: var(--clr-whitetxt);
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+}

@@ -17,3 +17,11 @@ define("HOST", "localhost");
 define("DBNAME", "trelat2");
 define("DBLOGIN", "trelat2");
 define("DBPWD", "trelat2");
+
+
+function getMovies(){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $answer = $cnx->query("select titre, urlImage from Films"); 
+    $res = $answer->fetchAll(PDO::FETCH_OBJ);
+    return $res;
+}
