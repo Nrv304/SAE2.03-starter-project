@@ -20,8 +20,7 @@
  */
 require("model.php");
 
-if ( isset($_REQUEST['action']) && $_REQUEST['action']=='getmovies' ){
-    $movies_list = getMovies();
-    echo json_encode($movies_list);
-    exit();
-  }
+function readmoviesController(){
+    $movies = getAllMovies();
+    return $movies;
+}

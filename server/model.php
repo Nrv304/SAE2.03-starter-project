@@ -19,9 +19,11 @@ define("DBLOGIN", "trelat2");
 define("DBPWD", "trelat2");
 
 
-function getMovies(){
+function getAllMovies(){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $answer = $cnx->query("select titre, urlImage from Films"); 
-    $res = $answer->fetchAll(PDO::FETCH_OBJ);
+    $sql = "select name, image from Films"; 
+    $stm = $csx->prepare($sql);
+    $stmt->execute();
+    $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $res;
 }

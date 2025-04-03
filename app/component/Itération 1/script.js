@@ -3,7 +3,7 @@ let template = await templateFile.text();
 let Films = {}; 
 Films.format =  function(obj) {
     let html = template;
-    html = html.replace('{{image}}', obj.urlImage);
+    html = html.replace('{{image}}', obj.image);
     html = html.replaceAll('{{titre}}', obj.titre);
     return html;
 }
