@@ -53,7 +53,7 @@ if ( isset($_REQUEST['todo']) ){
   switch($todo){
 
     case 'redmovies'
-      $data = readmovies(); 
+      $data = readmoviesController(); 
       break;
 
     default: // il y a un paramètre todo mais sa valeur n'est pas reconnue/supportée

@@ -21,7 +21,7 @@ define("DBPWD", "trelat2");
 
 function getAllMovies(){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $sql = "select name, image from Films"; 
+    $sql = "select name, image from Movie"; 
     $stm = $csx->prepare($sql);
     $stmt->execute();
     $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
