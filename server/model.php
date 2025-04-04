@@ -55,3 +55,25 @@ function addMovies($l, $d, $y, $n, $r, $i, $t, $m, $id){
     $res = $stmt->rowCount(); 
     return $res;
 }
+
+function getMovieDetail($id) {
+    try {
+        $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD, [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+        ]);
+
+        // Requête SQL pour récupérer les détails du film
+        $sql = "SELECT id, name, director, year, length, description, image, trailer, min_age, id_category 
+                FROM Movie 
+                WHERE id = :id";
+
+        $stmt = $cnx->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_OBJ); // Retourne les détails du film sous forme d'objet
+    } catch (Exception $e) {
+        error_log("Erreur SQL : " . $e->getMessage()); // Log dans les erreurs PHP
+        return false;
+    }
+}
