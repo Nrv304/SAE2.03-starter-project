@@ -40,6 +40,11 @@
           // Récupérer les détails du film depuis le serveur
           let movieDetails = await DataMovie.requestMovieDetails(movieId);
 
+          // Vérifiez si les données sont valides
+          if (!movieDetails || !movieDetails.name) {
+            throw new Error("Les détails du film sont invalides ou manquants.");
+          }
+
           // Afficher les détails du film
           V.renderMovieDetail(movieDetails);
         } catch (error) {
@@ -52,6 +57,8 @@
         let data = await DataMovie.getAll();
         V.renderMovies(data);
       };
+
+      window.V = {};
       /**
        * V.renderNavBar
        *
@@ -70,7 +77,7 @@
       };
 
       V.renderMovieDetail = function (movieData) {
-        let content = document.querySelector("#movie-detail");
+        let content = document.querySelector("#content"); // Assurez-vous que l'élément cible est correct
         content.innerHTML = MovieDetail.format(movieData);
       };
 

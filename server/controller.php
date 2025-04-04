@@ -46,6 +46,7 @@ function addmoviesController(){
 }
 
 function readMovieDetailController() {
+
     if (!isset($_REQUEST['id'])) {
         return false; 
     }
