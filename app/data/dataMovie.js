@@ -8,5 +8,10 @@ DataMovie.getAll = async function () {
   return movies;
 };
 
-export { DataMovie };
+DataMovie.requestMovieDetails = async function (movieId) {
+  let answer = await fetch(HOST_URL + `/server/script.php?todo=getMovieDetails&id=${movieId}`);
+  let movieDetails = await answer.json();
+  return movieDetails;
+};
 
+export { DataMovie };

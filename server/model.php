@@ -34,7 +34,6 @@ function getAllMovies(){
 }
 
 function addMovies($l, $d, $y, $n, $r, $i, $t, $m, $id){
-try {
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD); 
     // Requête SQL de mise à jour du menu avec des paramètres
     $sql = "INSERT INTO Movie (name, director, length, description, year, image, trailer, min_age, id_category) 
@@ -53,11 +52,6 @@ try {
     $stmt->bindParam(':id_category', $id);
     // Exécute la requête SQL
     $stmt->execute();
-    error_log("Requête SQL exécutée : " . $stmt->queryString);
-    $res = $stmt->rowCount(); // Récupère le nombre de lignes affectées
-   } catch (Exception $e) {
-        error_log("Erreur SQL : " . $e->getMessage()); // Log dans les erreurs PHP
-        return false;
-    }
-
+    $res = $stmt->rowCount(); 
+    return $res;
 }

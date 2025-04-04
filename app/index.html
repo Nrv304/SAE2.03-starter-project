@@ -31,8 +31,11 @@
       C.start = function () {
         V.renderNavBar("C.handlerAbout()");
         C.getAllMovies();
+        V.renderMovieDetail();
       };
 
+      C.handlerDetail = async function () {
+      };
       // Vue (contient tout ce qui est relatif à l'affichage)
       window.V = {};
 
@@ -55,6 +58,11 @@
       V.renderMovies = function (data) {
         let content = document.querySelector("#content");
         content.innerHTML = Films.formatLi(data);
+      };
+
+      V.renderMovieDetail = function (movieData) {
+        let content = document.querySelector("#movie-detail");
+        content.innerHTML = MovieDetail.format(movieData);
       };
 
       C.start(); // Démarre l'application

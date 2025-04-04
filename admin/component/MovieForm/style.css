@@ -1,0 +1,76 @@
+/* Alternative styles for the MovieForm component */
+.addMovies {
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 25px;
+    background-color: #ffffff;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    font-family: 'Roboto', sans-serif;
+}
+
+.addMovies__title {
+    font-size: 2rem;
+    margin-bottom: 25px;
+    color: #222;
+    text-align: left;
+    font-weight: bold;
+}
+
+.addMovies__form {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 20px;
+}
+
+.addMovies__form input,
+.addMovies__form select {
+    padding: 12px;
+    font-size: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.addMovies__form input:focus,
+.addMovies__form select:focus {
+    outline: none;
+    border-color: #28a745;
+    box-shadow: 0 0 6px rgba(40, 167, 69, 0.5);
+}
+
+.addMovies__form input[type="button"] {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.addMovies__form input[type="button"]:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+.addMovies__form select {
+    appearance: none;
+    background-color: #f8f9fa;
+    cursor: pointer;
+}
+
+.addMovies__form select:invalid {
+    color: #bbb;
+}
+
+.addMovies__form input[type="text"]::placeholder,
+.addMovies__form input[type="number"]::placeholder,
+.addMovies__form input[type="url"]::placeholder {
+    color: #bbb;
+    font-style: italic;
+}

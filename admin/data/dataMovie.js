@@ -12,13 +12,10 @@ DataMovie.getAll = async function () {
 DataMovie.addMovie = async function (movie) {
     let config = {
       method: "POST",
-      headers: {
-          "Content-Type": "application/json",
-      },
-      body: JSON.stringify(movie),
+      body: movie,
     };
     let answer = await fetch(
-        HOST_URL + "/server/script.php?todo=addMovie,",
+        HOST_URL + "/server/script.php?todo=addMovies",
         config
     );
     let data = await answer.json();

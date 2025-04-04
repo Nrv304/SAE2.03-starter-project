@@ -18,9 +18,17 @@
 
       window.C = {};
 
+      C.handlerAddMovie = async function () {
+        let form = document.querySelector(".addMovies__form");
+        let fd = new FormData(form);
+        let res = await DataMovie.addMovie(fd);
+        V.renderLog(res);
+
+      };
+
       C.start = function () {
         V.renderLog("Démarrage de l'application");
-        V.renderAddMovie ();
+        V.renderAddMovie ("C.handlerAddMovie()");
       };
 
       window.V = {};
