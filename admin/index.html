@@ -8,17 +8,27 @@
   </head>
   <body>
     <section id="log"></section>
+    <section id="movieform"></section>
+    
 
     <script type="module">
       import { Log } from "./component/Log/script.js";
+      import { MoviesForm } from "./component/MovieForm/script.js";
+      import { DataMovie } from "./data/dataMovie.js";
 
       window.C = {};
 
       C.start = function () {
         V.renderLog("Démarrage de l'application");
+        V.renderAddMovie ();
       };
 
       window.V = {};
+
+      V.renderAddMovie = function (handler) {
+        let content = document.querySelector("#movieform");
+        content.innerHTML = MoviesForm.format(handler);
+      };
 
       V.renderLog = function (txt) {
         let content = document.querySelector("#log");

@@ -1,0 +1,31 @@
+<div class="addMovies">
+    <h4 class="addMovies__title"># Ajouter ou modifier un Film</h4>
+  
+    <form class="addMovies__form">
+      <input type="text" name="name" placeholder="Saisir le titre du film" required>
+      <input type="text" name="director" placeholder="Saisir le réalisateur" pattern="[^0-9]*" 
+             title="Les chiffres ne sont pas autorisés" required>
+      <input type="number" name="year" placeholder="Année de sortie" min="1900" max="2025" required>
+      <input type="number" name="length" placeholder="Durée en minutes" min="1" required>
+      <input type="text" name="description" placeholder="Saisir le synopsis" required>
+  
+      <select name="id_category" required>
+        <option value="" disabled selected>Choisir une catégorie</option>
+        <option value="1">Action</option>
+        <option value="2">Comédie</option>
+        <option value="3">Drame</option>
+        <option value="4">Science-fiction</option>
+        <option value="5">Animation</option>
+        <option value="6">Thriller</option>
+        <option value="7">Horreur</option>
+        <option value="8">Aventure</option>
+        <option value="9">Fantaisie</option>
+        <option value="10">Documentaire</option>
+      </select>
+  
+      <input type="text" name="image" placeholder="Nom du fichier de l'affiche" required>
+      <input type="url" name="trailer" placeholder="URL du trailer" required>
+      <input type="number" name="min_age" placeholder="Restrictions d'âge" min="0" max="18" required>
+      <button type="submit">{{handler}}</button>
+    </form>
+  </div>

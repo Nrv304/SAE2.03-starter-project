@@ -53,6 +53,8 @@ try {
     $stmt->bindParam(':id_category', $id);
     // Exécute la requête SQL
     $stmt->execute();
+    error_log("Requête SQL exécutée : " . $stmt->queryString);
+    $res = $stmt->rowCount(); // Récupère le nombre de lignes affectées
    } catch (Exception $e) {
         error_log("Erreur SQL : " . $e->getMessage()); // Log dans les erreurs PHP
         return false;

@@ -26,20 +26,34 @@ function readmoviesController(){
 }
 
 function addmoviesController(){
-    $name = $_REQUEST['name'];
-    $year = $_REQUEST['year'];
-    $length = $_REQUEST['length'];
-    $description = $_REQUEST['description'];
-    $director = $_REQUEST['director'];
-    $image = $_REQUEST['image'];
-    $id_category = $_REQUEST['id_category'];
-    $trailer = $_REQUEST['trailer'];
-    $min_age = $_REQUEST['min_age'];
-    $ok = addMovies($name, $director, $year, $length, $description, $image, $trailer, $min_age, $id_category);
-    if ($ok!=0){
-      return "$name a été ajouté avec succès !";
-    }
-    else{
-      return "Erreur lors de l'ajout de $name !";
-    }
+  $debug = []; // Tableau pour stocker les messages de débogage
+  $data = json_decode(file_get_contents("php://input"), true);
+  $debug[] = "Données reçues : " . print_r($data, true);
+
+  if (!$data) {
+      $debug[] = "Erreur : Les données JSON sont nulles ou invalides.";
+      return json_encode(["success" => false, "debug" => $debug]);
   }
+
+  $name = $data['name'];
+  $year = $data['year'];
+  $length = $data['length'];
+  $description = $data['description'];
+  $director = $data['director'];
+  $image = $data['image'];
+  $id_category = $data['id_category'];
+  $trailer = $data['trailer'];
+  $min_age = $data['min_age'];
+
+  $debug[] = "Paramètres extraits : name=$name, year=$year, length=$length, description=$description, director=$director, image=$image, id_category=$id_category, trailer=$trailer, min_age=$min_age";
+
+  $ok = addMovies($length, $description, $year, $name, $director, $image, $trailer, $min_age, $id_category);
+  
+  if ($ok != 0) {
+      $debug[] = "Film ajouté avec succès : $name";
+      return json_encode(["success" => true, "message" => "$name a été ajouté avec succès !", "debug" => $debug]);
+  } else {
+      $debug[] = "Erreur lors de l'ajout du film : $name";
+      return json_encode(["success" => false, "message" => "Erreur lors de l'ajout de $name !", "debug" => $debug]);
+  }
+}
