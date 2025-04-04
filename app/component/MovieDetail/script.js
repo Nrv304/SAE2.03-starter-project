@@ -4,16 +4,16 @@ let template = await templateFile.text();
 let MovieDetail = {};
 
 // Formate les détails d'un film avec le template
-MovieDetail.format = function (movie) {
+MovieDetail.format = function (film) {
   let html = template;
-  html = html.replace("{{movietTitle}}", movie.name);
-  html = html.replace("{{director}}", movie.director);
-  html = html.replace("{{year}}", movie.year);
-  html = html.replace("{{description}}", movie.description);
-  html = html.replace("{{category}}", movie.category);
-  html = html.replace("{{min_age}}", movie.min_age);
-  html = html.replace("{{trailer}}", movie.trailer);
-  html = html.replace("{{image}}", movie.image);
+  html = html.replace("{{movietTitle}}", film.name);
+  html = html.replace("{{movieDirector}}", film.director);
+  html = html.replace("{{movieReleaseYear}}", film.year);
+  html = html.replace("{{movieDescription}}", film.description);
+  html = html.replace("{{movieCategory}}", film.category);
+  html = html.replace("{{movieAgeRestriction}}", film.min_age);
+  html = html.replace("{{movieTrailerUrl}}", film.trailer);
+  html = html.replace("{{image}}", film.image);
   return html;
 };
 

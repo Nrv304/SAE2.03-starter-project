@@ -1,14 +1,14 @@
     <div class="movie-info">
-        <h1 class="movie-title">{{ movietTitle }}</h1>
+        <h1 class="movie-title">{{movietTitle}}</h1>
         <div class="movie-poster">
-            <img src="https://mmi.unilim.fr/~trelat2/SAE2.03-starter-project/server/images/{{image}}" alt="Affiche de {{ movieTitle }}">
+            <img src="https://mmi.unilim.fr/~trelat2/SAE2.03-starter-project/server/images/{{image}}" alt="Affiche de {{movieTitle}}">
         </div>
-        <p class="movie-description">{{ movieDescription }}</p>
+        <p class="movie-description">{{movieDescription}}</p>
         <ul class="movie-details">
-            <li><strong>Réalisateur :</strong> {{ movieDirector }}</li>
-            <li><strong>Année de sortie :</strong> {{ movieReleaseYear }}</li>
-            <li><strong>Catégorie :</strong> {{ movieCategory }}</li>
-            <li><strong>Restrictions d'âge :</strong> {{ movieAgeRestriction }}</li>
+            <li><strong>Réalisateur :</strong> {{movieDirector}}</li>
+            <li><strong>Année de sortie :</strong> {{movieReleaseYear}}</li>
+            <li><strong>Catégorie :</strong> {{movieCategory}}</li>
+            <li><strong>Restrictions d'âge :</strong> {{movieAgeRestriction}}</li>
         </ul>
     </div>
 
@@ -17,8 +17,8 @@
         <iframe 
             width="560" 
             height="315" 
-            src="{{ movieTrailerUrl }}" 
-            title="Trailer de {{ movieTitle }}" 
+            src="{{movieTrailerUrl}}" 
+            title="Trailer de {{movieTitle}}" 
             frameborder="0" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
             allowfullscreen>
