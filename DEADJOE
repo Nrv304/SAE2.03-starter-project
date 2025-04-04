@@ -15,3 +15,13 @@
 *** Fichier '* Startup Log *'
 Traitement de '/etc/joe/editorrc'...Traitement de '/etc/joe/ftyperc'...Finished processing /etc/joe/ftyperc
 Finished processing /etc/joe/editorrc
+
+*** These modified files were found in JOE when it aborted on Fri Apr  4 10:43:46 2025
+*** JOE was aborted by UNIX signal 1
+
+*** Fichier '(Sans nom)'
+/home/etudiants/trelat2/public_html/SAE2.03-starter-project/.git/COMMIT_EDITMSG
+
+*** Fichier '* Startup Log *'
+Traitement de '/etc/joe/editorrc'...Traitement de '/etc/joe/ftyperc'...Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/editorrc

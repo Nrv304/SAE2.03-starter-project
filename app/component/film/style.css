@@ -1,3 +1,10 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
 .film {
   position: relative;
   color: var(--clr-whitetxt);
@@ -38,15 +45,15 @@
 
 .film__title {
   position: absolute;
-  bottom: 0rem;
+  bottom: 0.5rem;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: var(--color-white);
   padding: 0.5rem 1rem;
   max-width: 100%;
-  text-align: left;
+  text-align: center;
   white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
