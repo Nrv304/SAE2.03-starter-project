@@ -32,3 +32,28 @@ function getAllMovies(){
         return false;
     }
 }
+
+function addMovies($l, $d, $y, $n, $r, $i, $t, $m, $id){
+    // Connexion à la base de données
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD); 
+    // Requête SQL de mise à jour du menu avec des paramètres
+    $sql = "REPLACE INTO Movie (name, director, length, description, year, image, trailer, min_age, id_category) 
+            VALUES (:name, :director, :length, :description, :year, :image, :trailer, :min_age, :id_category)";
+    // Prépare la requête SQL
+    $stmt = $cnx->prepare($sql);
+    // Lie les paramètres aux valeurs
+    $stmt->bindParam(':length', $l);
+    $stmt->bindParam(':description', $d);
+    $stmt->bindParam(':year', $y);
+    $stmt->bindParam(':name', $n);
+    $stmt->bindParam(':director', $r);
+    $stmt->bindParam(':image', $i);
+    $stmt->bindParam(':trailer', $t);
+    $stmt->bindParam(':min_age', $m);
+    $stmt->bindParam(':id_category', $id);
+    // Exécute la requête SQL
+    $stmt->execute();
+    // Récupère le nombre de lignes affectées par la requête
+    $res = $stmt->rowCount(); 
+    return $res; // Retourne le nombre de lignes affectées
+}

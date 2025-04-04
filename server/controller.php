@@ -24,3 +24,21 @@ function readmoviesController(){
     $movies = getAllMovies();
     return $movies;
 }
+
+function addmoviesController(){
+    $name = $_REQUEST['name'];
+    $year = $_REQUEST['year'];
+    $length = $_REQUEST['length'];
+    $description = $_REQUEST['description'];
+    $director = $_REQUEST['director'];
+    $image = $_REQUEST['image'];
+    $trailer = $_REQUEST['trailer'];
+    $min_age = $_REQUEST['min_age'];
+    $ok = addMovies($name, $director, $year, $length, $description, $image, $trailer, $min_age);
+    if ($ok!=0){
+      return "Le menu du $jour semaine $semaine est à jour";
+    }
+    else{
+      return false;
+    }
+  }
