@@ -13,6 +13,7 @@ Films.format = function (films) {
         let filmHtml = template;
         filmHtml = filmHtml.replace("{{titre}}", film.name);
         filmHtml = filmHtml.replace("{{image}}", film.image);
+        filmHtml = filmHtml.replace("{{id}}", film.id);
         html += filmHtml;
     });
     return html;

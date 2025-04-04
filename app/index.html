@@ -16,6 +16,7 @@
       import { NavBar } from "./component/NavBar/script.js";
       import { DataMovie} from "./data/dataMovie.js";
       import { Films } from "./component/film/script.js";
+      import { MovieDetail } from "./component/MovieDetail/script.js";
 
       // Controleur
       // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
@@ -34,10 +35,18 @@
         V.renderMovieDetail();
       };
 
-      C.handlerDetail = async function () {
+      C.handlerDetail = async function (movieId) {
+        try {
+          // Récupérer les détails du film depuis le serveur
+          let movieDetails = await DataMovie.requestMovieDetails(movieId);
+
+          // Afficher les détails du film
+          V.renderMovieDetail(movieDetails);
+        } catch (error) {
+          console.error("Erreur lors de la récupération des détails du film :", error);
+          V.renderError("Impossible de charger les détails du film.");
+        }
       };
-      // Vue (contient tout ce qui est relatif à l'affichage)
-      window.V = {};
 
       C.getAllMovies = async function () {
         let data = await DataMovie.getAll();
