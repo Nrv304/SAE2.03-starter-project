@@ -29,8 +29,12 @@
         );
       };
 
+      C.handlerHome = function () {
+        C.getAllMovies(); // Appelle la fonction pour récupérer et afficher tous les films
+      };
+
       C.start = function () {
-        V.renderNavBar("C.handlerAbout()");
+        V.renderNavBar("C.handlerAbout()", "C.handlerHome()");
         C.getAllMovies();
         V.renderMovieDetail();
       };
@@ -66,9 +70,9 @@
        * Elle sélectionne l'élément HTML avec l'ID "header" et y insère le contenu
        * formaté par le composant NavBar.
        */
-      V.renderNavBar = function (hAbout) {
+      V.renderNavBar = function (hAbout, hHome) {
         let header = document.querySelector("#header");
-        header.innerHTML = NavBar.format(hAbout);
+        header.innerHTML = NavBar.format(hAbout, hHome);
       };
 
       V.renderMovies = function (data) {
