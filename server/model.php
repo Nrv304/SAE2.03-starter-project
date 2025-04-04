@@ -34,10 +34,10 @@ function getAllMovies(){
 }
 
 function addMovies($l, $d, $y, $n, $r, $i, $t, $m, $id){
-    // Connexion à la base de données
+try {
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD); 
     // Requête SQL de mise à jour du menu avec des paramètres
-    $sql = "REPLACE INTO Movie (name, director, length, description, year, image, trailer, min_age, id_category) 
+    $sql = "INSERT INTO Movie (name, director, length, description, year, image, trailer, min_age, id_category) 
             VALUES (:name, :director, :length, :description, :year, :image, :trailer, :min_age, :id_category)";
     // Prépare la requête SQL
     $stmt = $cnx->prepare($sql);
@@ -53,7 +53,9 @@ function addMovies($l, $d, $y, $n, $r, $i, $t, $m, $id){
     $stmt->bindParam(':id_category', $id);
     // Exécute la requête SQL
     $stmt->execute();
-    // Récupère le nombre de lignes affectées par la requête
-    $res = $stmt->rowCount(); 
-    return $res; // Retourne le nombre de lignes affectées
+   } catch (Exception $e) {
+        error_log("Erreur SQL : " . $e->getMessage()); // Log dans les erreurs PHP
+        return false;
+    }
+
 }

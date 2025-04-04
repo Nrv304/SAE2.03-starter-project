@@ -51,11 +51,11 @@
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--color-white);
-  padding: 0.5rem 1rem;
-  max-width: 100%;
+  padding: 0.3rem 0.5rem; /* Réduit le padding pour économiser de l'espace */
+  max-width: 90%; /* Augmente la largeur maximale à 90% du conteneur */
   text-align: center;
-  white-space: normal;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: nowrap; /* Empêche le texte de passer à la ligne */
+  overflow: hidden; /* Cache le texte qui dépasse */
+  text-overflow: ellipsis; /* Ajoute des points de suspension si le texte est trop long */
   z-index: 2;
 }

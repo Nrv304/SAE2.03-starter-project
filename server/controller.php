@@ -37,9 +37,9 @@ function addmoviesController(){
     $min_age = $_REQUEST['min_age'];
     $ok = addMovies($name, $director, $year, $length, $description, $image, $trailer, $min_age, $id_category);
     if ($ok!=0){
-      return "Le menu du $jour semaine $semaine est à jour";
+      return "$name a été ajouté avec succès !";
     }
     else{
-      return false;
+      return "Erreur lors de l'ajout de $name !";
     }
   }
