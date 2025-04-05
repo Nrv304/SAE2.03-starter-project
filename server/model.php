@@ -89,3 +89,46 @@ function getMovieDetail($id) {
         return false;
     }
 }
+
+function getMoviesCategory() {
+    try {
+        $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD, [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+        ]);
+
+        // Requête SQL pour récupérer les films groupés par catégorie
+        $sql = "SELECT 
+                    Category.id AS category_id, 
+                    Category.name AS category_name, 
+                    Movie.id AS movie_id, 
+                    Movie.name AS movie_name, 
+                    Movie.image AS movie_image
+                FROM Movie
+                JOIN Category ON Movie.id_category = Category.id
+                ORDER BY Category.name, Movie.name";
+
+        $stmt = $cnx->query($sql);
+        $rows = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        // Regrouper les films par catégorie
+        $categories = [];
+        foreach ($rows as $row) {
+            if (!isset($categories[$row->category_id])) {
+                $categories[$row->category_id] = [
+                    "name" => $row->category_name,
+                    "movies" => []
+                ];
+            }
+            $categories[$row->category_id]["movies"][] = [
+                "id" => $row->movie_id,
+                "name" => $row->movie_name,
+                "image" => $row->movie_image
+            ];
+        }
+
+        return array_values($categories); // Retourne un tableau indexé
+    } catch (Exception $e) {
+        error_log("Erreur SQL : " . $e->getMessage());
+        return false;
+    }
+}

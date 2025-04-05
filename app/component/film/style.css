@@ -14,6 +14,13 @@
   align-items: center;
   justify-content: center;
   list-style: none;
+  border-radius: 15px; /* Ajout des coins arrondis */
+  overflow:hidden;
+}
+
+.film:hover {
+  transform: translateY(-5px); /* Légère élévation au survol */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Ombre plus marquée */
 }
 
 .film__tumbnail {
@@ -30,9 +37,10 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 20rem;
-  background: linear-gradient(to top, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
-  z-index: 1;
+  height: 100%; /* Assurez-vous que le dégradé couvre toute la hauteur */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+  z-index: 1; /* Placez le dégradé au-dessus de l'image */
+  pointer-events: none; /* Empêche toute interaction avec cet élément */
 }
 
 .film__image {
@@ -40,7 +48,7 @@
   height: 20rem;
   object-fit: cover;
   position: relative;
-  z-index: 0;
+  z-index: 0; /* Placez l'image en dessous du dégradé */
 }
 
 .film__title {

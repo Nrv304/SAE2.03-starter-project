@@ -17,6 +17,7 @@
       import { DataMovie} from "./data/dataMovie.js";
       import { Films } from "./component/film/script.js";
       import { MovieDetail } from "./component/MovieDetail/script.js";
+      import { MovieCategory } from "./component/MovieCategory/script.js";
 
       // Controleur
       // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
@@ -73,6 +74,11 @@
       V.renderNavBar = function (hAbout, hHome) {
         let header = document.querySelector("#header");
         header.innerHTML = NavBar.format(hAbout, hHome);
+      };
+
+      V.renderMoviesCategory = function (data) {
+        let content = document.querySelector("#content");
+        content.innerHTML = data.map(MovieCategory.format).join("");
       };
 
       V.renderMovies = function (data) {
