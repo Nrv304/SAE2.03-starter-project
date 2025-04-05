@@ -2,7 +2,6 @@ import { Films } from "../film/script.js";
 
 let templateFile = await fetch("./component/MovieCategory/template.html");
 let template = await templateFile.text();
-console.log("Category data :", category);
 
 let MovieCategory = {};
 
