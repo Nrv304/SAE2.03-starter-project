@@ -1,20 +1,20 @@
 
 .film {
   position: relative;
-  color: var(--clr-whitetxt);
+  color: var(--color-fg);
   display: flex;
   gap: 0.5rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   list-style: none;
-  border-radius: 15px; /* Ajout des coins arrondis */
+  border-radius: 15px;
   overflow:hidden;
 }
 
 .film:hover {
-  transform: translateY(-5px); /* Légère élévation au survol */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Ombre plus marquée */
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.541);
 }
 
 .film__tumbnail {
@@ -31,10 +31,10 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%; /* Assurez-vous que le dégradé couvre toute la hauteur */
+  height: 100%;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
-  z-index: 1; /* Placez le dégradé au-dessus de l'image */
-  pointer-events: none; /* Empêche toute interaction avec cet élément */
+  z-index: 1;
+  pointer-events: none; 
 }
 
 .film__image {
@@ -42,7 +42,7 @@
   height: 20rem;
   object-fit: cover;
   position: relative;
-  z-index: 0; /* Placez l'image en dessous du dégradé */
+  z-index: 0;
 }
 
 .film__title {
@@ -53,11 +53,11 @@
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--color-white);
-  padding: 0.3rem 0.5rem; /* Réduit le padding pour économiser de l'espace */
-  max-width: 90%; /* Augmente la largeur maximale à 90% du conteneur */
+  padding: 0.3rem 0.5rem;
+  max-width: 90%; 
   text-align: center;
-  white-space: nowrap; /* Empêche le texte de passer à la ligne */
-  overflow: hidden; /* Cache le texte qui dépasse */
-  text-overflow: ellipsis; /* Ajoute des points de suspension si le texte est trop long */
+  white-space: nowrap;
+  overflow: hidden; 
+  text-overflow: ellipsis;
   z-index: 2;
 }

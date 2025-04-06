@@ -3,10 +3,11 @@
   }
   
   .movie-category__title {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 1rem;
-    color: var(--clr-primary);
+    color: var(--color-fg);
+    font-family: var(--ff-boldonse);
   }
   
   .movie-category__list {

@@ -1,13 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Boldonse&family=Figtree:ital,wght@0,300..900;1,300..900&family=Outfit:wght@100..900&display=swap');
 
 :root {
   /* Primitive Tokens */
-  --color-black: hsl(253, 69%, 8%);
+  --color-black: hsl(0, 0%, 9%);
   --color-white: hsl(0, 0%, 100%);
   --color-gray-light: hsl(0, 0%, 80%);
   --color-gray: hsl(0, 0%, 50%);
   --color-gray-dark: hsl(0, 0%, 20%);
+  --color-blue: hsl(210, 29%, 29%);
+  --color-blue-light: hsl(204, 70%, 53%);
   --ff-sans: "DM sans", sans-serif;
+  --ff-figtree: "Figtree", sans-serif;
+  --ff-boldonse: "Boldonse", sans-serif;
+  --ff-outfit: "Outfit", sans-serif;
 
   /* Sementic Tokens */
   --color-fg: var(--color-white);
