@@ -60,8 +60,10 @@ function readMovieDetailController() {
         return false;
     }
 }
+
 function readMoviesCategoryController() {
-    $categories = getMoviesCategory();
+    $age = isset($_REQUEST['age']) ? intval($_REQUEST['age']) : 0; // Par défaut, âge = 0
+    $categories = getMoviesCategory($age);
     return $categories ? $categories : false;
 }
 

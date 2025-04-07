@@ -10,13 +10,13 @@ NavBar.format = async function (hAbout, hHome, onProfileSelect) {
 
   // Récupération des profils via DataProfile
   const profiles = await DataProfile.readProfile();
+  console.log("Profils récupérés :", profiles);
   let profileOptions = profiles
-    .map(profile => `<option value="${profile.id}" data-img="${profile.avatar}">${profile.name}</option>`)
-    .join("");
-
+  .map(profile => `<option value="${profile.id}" data-img="${profile.avatar}" data-age="${profile.min_age}">${profile.name}</option>`)
+  .join("");
+ 
   html = html.replace("{{hAbout}}", hAbout);
   html = html.replace("{{hHome}}", hHome);
-  html = html.replace("{{onProfileSelect}}", onProfileSelect);
   html = html.replace("{{profileOptions}}", profileOptions);
   let image = profiles[0]?.avatar|| "";
   html = html.replace("{{image}}", image);

@@ -4,7 +4,7 @@
     <li class="navbar__item" onclick="{{hAbout}}">About</li>
   </ul>
   <div class="navbar__profile-container">
-    <select class="navbar__profile-select" onchange="{{onProfileSelect}}">
+    <select class="navbar__profile-select" onchange= "C.handlerProfileSelect(this)">
       <option value="" disabled selected>Choisir un profil</option>
       {{profileOptions}}
     </select>
