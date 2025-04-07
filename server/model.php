@@ -142,3 +142,17 @@ function addProfile($name, $avatar, $min_age) {
     $res = $stmt->rowCount();
     return $res; 
 }
+
+function getProfiles() {
+    try {
+        $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD, [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+        ]);
+        $sql = "SELECT id, name, avatar, min_age FROM Profil";
+        $stmt = $cnx->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    } catch (Exception $e) {
+        error_log("Erreur SQL : " . $e->getMessage());
+        return false;
+    }
+}

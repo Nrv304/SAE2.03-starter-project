@@ -38,12 +38,12 @@
 .addMovies__form input:focus,
 .addMovies__form select:focus {
     outline: none;
-    border-color: #28a745;
+    border-color: var(--color-green);
     box-shadow: 0 0 6px rgba(40, 167, 69, 0.5);
 }
 
 .addMovies__form input[type="button"] {
-    background-color: #28a745;
+    background-color: var(--color-green);
     color: #fff;
     border: none;
     cursor: pointer;
@@ -54,8 +54,7 @@
 }
 
 .addMovies__form input[type="button"]:hover {
-    background-color: #218838;
-    transform: scale(1.05);
+    background-color: var(--color-green-dark);
 }
 
 .addMovies__form select {

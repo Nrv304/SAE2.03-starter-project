@@ -18,11 +18,14 @@
       import { Films } from "./component/film/script.js";
       import { MovieDetail } from "./component/MovieDetail/script.js";
       import { MovieCategory } from "./component/MovieCategory/script.js";
+      import { DataProfile } from "./data/dataProfile.js";
 
       // Controleur
       // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
       // Une fois l'application terminée, on pourrait remettre let C.
       window.C = {};
+
+      C.activeProfileId = null;
 
       C.handlerAbout = function () {
         alert(
@@ -34,8 +37,29 @@
         C.getAllMovies(); // Appelle la fonction pour récupérer et afficher tous les films
       };
 
-      C.start = function () {
-        V.renderNavBar("C.handlerAbout()", "C.handlerHome()");
+      C.handlerProfileSelect = function (event) {
+        const selectedProfileId = event.target.value;
+        C.activeProfileId = selectedProfileId; // Met à jour le profil actif
+
+        // Récupère l'élément de l'avatar
+        const avatarElement = document.getElementById("profile-image");
+
+        // Si aucun profil n'est sélectionné, masque l'avatar
+        if (!selectedProfileId) {
+          avatarElement.style.display = "none";
+          return;
+        }
+
+        // Sinon, met à jour l'avatar et l'affiche
+        const selectedOption = event.target.options[event.target.selectedIndex];
+        const avatarFileName = selectedOption.getAttribute("data-img") || "default-avatar.png";
+        const avatarUrl = `https://mmi.unilim.fr/~trelat2/SAE2.03-starter-project/server/images/${avatarFileName}`
+        avatarElement.src = avatarUrl;
+        avatarElement.style.display = "block";
+      };
+
+      C.start = async function () {
+        V.renderNavBar("C.handlerAbout()", "C.handlerHome()","C.handlerProfileSelect(event)");
         C.getAllMovies();
         V.renderMovieDetail();
       };
@@ -71,9 +95,9 @@
        * Elle sélectionne l'élément HTML avec l'ID "header" et y insère le contenu
        * formaté par le composant NavBar.
        */
-      V.renderNavBar = function (hAbout, hHome) {
+      V.renderNavBar = async function (hAbout, hHome, onProfileSelect) {
         let header = document.querySelector("#header");
-        header.innerHTML = NavBar.format(hAbout, hHome);
+        header.innerHTML = await NavBar.format(hAbout, hHome, onProfileSelect);
       };
 
       V.renderMoviesCategory = function (data) {

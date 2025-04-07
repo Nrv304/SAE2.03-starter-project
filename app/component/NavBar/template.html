@@ -3,4 +3,11 @@
     <li class="navbar__item" onclick="{{hHome}}">Home</li>
     <li class="navbar__item" onclick="{{hAbout}}">About</li>
   </ul>
+  <div class="navbar__profile-container">
+    <select class="navbar__profile-select" onchange="{{onProfileSelect}}">
+      <option value="" disabled selected>Choisir un profil</option>
+      {{profileOptions}}
+    </select>
+    <img id="profile-image" src="https://mmi.unilim.fr/~trelat2/SAE2.03-starter-project/server/images/{{image}}" alt="Avatar du profil" class="navbar__profile-avatar" style="display: none;">
+  </div>
 </nav>

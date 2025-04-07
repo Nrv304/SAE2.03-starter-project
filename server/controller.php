@@ -80,3 +80,8 @@ function addProfileController(){
         return "Le profile n'a pas pu être ajouté";
       }
 }
+
+function readProfilesController() {
+    $profiles = getProfiles();
+    return $profiles ? $profiles : false;
+}

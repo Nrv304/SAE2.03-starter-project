@@ -27,3 +27,28 @@
   justify-content: center;
   gap: 2rem;
 }
+
+.navbar__profile-select {
+  margin-left: auto;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--color-fg);
+  border-radius: 4px;
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  cursor: pointer;
+}
+
+.navbar__profile-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.navbar__profile-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--color-fg);
+}
