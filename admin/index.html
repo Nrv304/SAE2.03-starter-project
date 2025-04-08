@@ -31,7 +31,7 @@
       };
 
       C.handlerAddProfile = async function () {
-        let form = document.querySelector(".addProfile__form");
+        let form = document.querySelector(".profileForm__form");
 
         let fd = new FormData(form); // Declare and initialize the FormData object
         let res = await DataProfile.addProfile(fd);
