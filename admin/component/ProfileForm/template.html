@@ -2,9 +2,8 @@
     <h4 class="profileForm__title"># Ajouter ou Modifier un Profil</h4>
     <form class="profileForm__form">
         <!-- Menu déroulant pour sélectionner un profil (facultatif pour modification) -->
-        <label for="profile-select">Sélectionner un profil à modifier</label>
         <select id="profile-select" name="profile">
-            <option value="" disabled selected>Choisir un profil à modifier</option>
+            <option value="">Choisir un profil si modifier</option>
             {{options}} <!-- Les options seront générées dynamiquement -->
         </select>
 
@@ -15,6 +14,6 @@
         <input id="profile-min-age" type="text" name="min_age" placeholder="Restrictions d'âge" required>
 
         <!-- Boutons pour soumettre -->
-        <input onclick="{{addHandler}}" type="button" value="Ajouter" name="todo">
+        <input onclick="{{handler}}" type="button" value="Ajouter" name="todo">
     </form>
 </div>

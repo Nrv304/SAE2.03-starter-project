@@ -1,6 +1,6 @@
-.addProfile {
+.profileForm {
     max-width: 400px;
-    margin: 0 auto;
+    margin: 20px auto;
     padding: 20px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
@@ -8,7 +8,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.addProfile__title {
+.profileForm__title {
     font-size: 1.5rem;
     font-weight: bold;
     text-align: center;
@@ -16,26 +16,35 @@
     color: #333;
 }
 
-.addProfile__form {
+.profileForm__form {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-.addProfile__form input[type="text"] {
+.profileForm__form label {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.profileForm__form select,
+.profileForm__form input[type="text"] {
     padding: 10px;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.addProfile__form input[type="text"]:focus {
+.profileForm__form select:focus,
+.profileForm__form input[type="text"]:focus {
     border-color: var(--color-green);
+    box-shadow: 0 0 5px rgba(0, 128, 0, 0.3);
     outline: none;
 }
 
-.addProfile__form input[type="button"] {
+.profileForm__form input[type="button"] {
     padding: 10px;
     font-size: 1rem;
     color: #fff;
@@ -43,9 +52,19 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.addProfile__form input[type="button"]:hover {
+.profileForm__form input[type="button"]:hover {
     background-color: var(--color-green-dark);
+    transform: scale(1.05);
+}
+
+.profileForm__form input[type="button"]:active {
+    transform: scale(0.95);
+}
+
+.profileForm__form input[type="text"]::placeholder {
+    color: #aaa;
+    font-style: italic;
 }

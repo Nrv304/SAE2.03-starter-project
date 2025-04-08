@@ -133,7 +133,7 @@ function addProfile($id, $name, $avatar, $min_age) {
     $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
 
     $sql = "REPLACE INTO Profil (id, name, avatar, min_age) 
-            VALUES (:id ,:name, :avatar, :min_age)";
+            VALUES (:id, :name, :avatar, :min_age)";
 
     $stmt = $cnx->prepare($sql);
 
@@ -142,9 +142,13 @@ function addProfile($id, $name, $avatar, $min_age) {
     $stmt->bindParam(':avatar', $avatar, PDO::PARAM_STR);
     $stmt->bindParam(':min_age', $min_age, PDO::PARAM_INT);
 
-    $stmt->execute();
-    $res = $stmt->rowCount();
-    return $res; 
+    try {
+        $stmt->execute();
+        return $stmt->rowCount();
+    } catch (Exception $e) {
+        error_log("Erreur SQL : " . $e->getMessage());
+        return false;
+    }
 }
 
 function getProfiles() {

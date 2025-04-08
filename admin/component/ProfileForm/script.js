@@ -15,7 +15,7 @@ ProfileForm.format = function (profiles, handler) {
     }
 
     html = html.replace("{{options}}", options);
-    html = html.replace("{{addHandler}}", handler);
+    html = html.replace("{{handler}}", handler);
     return html;
 };
 

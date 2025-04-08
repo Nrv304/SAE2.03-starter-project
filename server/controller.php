@@ -68,20 +68,25 @@ function readMoviesCategoryController() {
 }
 
 function addProfileController(){
-    
+    if (!isset($_REQUEST['name']) || !isset($_REQUEST['min_age'])) {
+        http_response_code(400); // Mauvaise requête
+        echo json_encode(["error" => "Paramètres manquants pour ajouter un profil"]);
+        return false;
+    }
+
     $id = isset($_REQUEST['id']) ? $_REQUEST['id'] : null;
     $name = $_REQUEST['name'];
     $avatar = $_REQUEST['avatar'];
-    $min_age = $_REQUEST['min_age'];
+    $min_age = intval($_REQUEST['min_age']);
 
-    $ok = addProfile($name, $avatar, $min_age);
-   
-    if ($ok!=0){
-        return "$name a été ajouté avec succès";
-      }
-      else{
-        return "Le profile n'a pas pu être ajouté";
-      }
+    $ok = addProfile($id, $name, $avatar, $min_age);
+
+    if ($ok != 0) {
+        echo json_encode(["success" => true, "message" => "$name a été ajouté avec succès"]);
+    } else {
+        http_response_code(500); // Erreur interne
+        echo json_encode(["error" => "Le profil n'a pas pu être ajouté"]);
+    }
 }
 
 function readProfilesController() {
