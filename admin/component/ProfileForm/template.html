@@ -1,10 +1,20 @@
-<div class="addProfile">
-    <h4 class="addProfile__title"># Ajouter un Profile</h4>
-    <form class="addProfile__form">
-        <input type="text" name="name" placeholder="Nom du profil" required>
-        <input type="text" name="avatar" placeholder="Avatar ou image associée (facultatif)" >
-        <input type="text" name="min_age" placeholder="Restrictions d'âge"  required >
-        <input onclick="{{handler}}" type="button" value="Ajouter" name="todo">
+<div class="profileForm">
+    <h4 class="profileForm__title"># Ajouter ou Modifier un Profil</h4>
+    <form class="profileForm__form">
+        <!-- Menu déroulant pour sélectionner un profil (facultatif pour modification) -->
+        <label for="profile-select">Sélectionner un profil à modifier</label>
+        <select id="profile-select" name="profile">
+            <option value="" disabled selected>Choisir un profil à modifier</option>
+            {{options}} <!-- Les options seront générées dynamiquement -->
+        </select>
 
+        <!-- Champs pour ajouter ou modifier les informations du profil -->
+        <input id="profile-id" type="hidden" name="id" value="">
+        <input id="profile-name" type="text" name="name" placeholder="Nom du profil" required>
+        <input id="profile-avatar" type="text" name="avatar" placeholder="Avatar ou image associée (facultatif)">
+        <input id="profile-min-age" type="text" name="min_age" placeholder="Restrictions d'âge" required>
+
+        <!-- Boutons pour soumettre -->
+        <input onclick="{{addHandler}}" type="button" value="Ajouter" name="todo">
     </form>
 </div>

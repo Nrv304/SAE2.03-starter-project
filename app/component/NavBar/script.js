@@ -4,7 +4,7 @@ let templateFile = await fetch("./component/NavBar/template.html");
 let template = await templateFile.text();
 
 let NavBar = {};
-NavBar.format = async function (hAbout, hHome, onProfileSelect) {
+NavBar.format = async function (hAbout, hHome) {
 
   let html = template;
 

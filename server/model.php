@@ -129,17 +129,18 @@ function getMoviesCategory($age) {
     }
 }
 
-function addProfile($name, $avatar, $min_age) {
+function addProfile($id, $name, $avatar, $min_age) {
     $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
 
-    $sql = "INSERT INTO Profil (name, avatar, min_age) 
-            VALUES (:name, :avatar, :min_age)";
+    $sql = "REPLACE INTO Profil (id, name, avatar, min_age) 
+            VALUES (:id ,:name, :avatar, :min_age)";
 
     $stmt = $cnx->prepare($sql);
 
-    $stmt->bindParam(':name', $name);
-    $stmt->bindParam(':avatar', $avatar);
-    $stmt->bindParam(':min_age', $min_age);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+    $stmt->bindParam(':avatar', $avatar, PDO::PARAM_STR);
+    $stmt->bindParam(':min_age', $min_age, PDO::PARAM_INT);
 
     $stmt->execute();
     $res = $stmt->rowCount();
@@ -147,15 +148,9 @@ function addProfile($name, $avatar, $min_age) {
 }
 
 function getProfiles() {
-    try {
-        $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD, [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        ]);
+        $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
         $sql = "SELECT id, name, avatar, min_age FROM Profil";
         $stmt = $cnx->query($sql);
         return $stmt->fetchAll(PDO::FETCH_OBJ);
-    } catch (Exception $e) {
-        error_log("Erreur SQL : " . $e->getMessage());
-        return false;
-    }
 }
+

@@ -69,6 +69,7 @@ function readMoviesCategoryController() {
 
 function addProfileController(){
     
+    $id = isset($_REQUEST['id']) ? $_REQUEST['id'] : null;
     $name = $_REQUEST['name'];
     $avatar = $_REQUEST['avatar'];
     $min_age = $_REQUEST['min_age'];

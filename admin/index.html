@@ -10,6 +10,7 @@
     <section id="log"></section>
     <section id="movieform"></section>
     <section id="addProfile"></section>
+    <section id="updateProfile"></section>
     
 
     <script type="module">
@@ -37,6 +38,7 @@
         V.renderLog(res);
       };
 
+
       C.start = function () {
         V.renderLog("Démarrage de l'application");
         V.renderAddMovie ("C.handlerAddMovie()");
@@ -55,9 +57,11 @@
         content.innerHTML = Log.format(txt);
       };
 
-      V.renderAddProfile = function (handler) {
+      V.renderAddProfile = async function (handler) {
         let content = document.querySelector("#addProfile");
-        content.innerHTML = ProfileForm.format(handler);
+        let profiles = await DataProfile.readProfile();
+        content.innerHTML = ProfileForm.format(profiles,handler);
+        ProfileForm.init();
       };
 
       C.start();
