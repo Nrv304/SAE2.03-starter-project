@@ -10,6 +10,8 @@
   <body>
     <header id="header"></header>
 
+    <section id = "featured"></section>
+
     <section id="content"></section>
 
     <script type="module">
@@ -19,6 +21,8 @@
       import { MovieDetail } from "./component/MovieDetail/script.js";
       import { MovieCategory } from "./component/MovieCategory/script.js";
       import { DataProfile } from "./data/dataProfile.js";
+      import { MovieFavorite } from "./component/MovieFavorite/script.js";
+      import { FeaturedMovies } from "./component/MovieFeatured/script.js";
 
       // Controleur
       // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
@@ -94,7 +98,9 @@
           "C.handlerProfileSelect(event)"
         );
         C.getAllMovies();
+        C.getFeaturedMovies();
         V.renderMovieDetail();
+        
       };
 
       C.handlerDetail = async function (movieId) {
@@ -155,26 +161,31 @@
       };
 
       C.removeFavorites = async function (profilId, movieId) {
-  profilId = profilId || C.getSelectedProfileId();
-  if (!profilId) {
-    alert("Aucun profil sélectionné.");
-    return;
-  }
-  try {
-    let res = await DataMovie.removeFavorite(profilId, movieId);
-    if (res.error) {
-      alert(res.error); // Affiche le message d'erreur si présent
-    } else if (res["Le film a bien été retiré de vos favoris"]) {
-      alert("Le film a bien été retiré de vos favoris.");
-    } else {
-      alert("Action effectuée avec succès.");
-    }
-    C.showFavorites(profilId); // Recharge les favoris
-  } catch (error) {
-    console.error("Erreur lors de la suppression des favoris :", error);
-    alert("Une erreur est survenue lors de la suppression des favoris.");
-  }
-};
+        profilId = profilId || C.getSelectedProfileId();
+        if (!profilId) {
+          alert("Aucun profil sélectionné.");
+          return;
+        }
+        try {
+          let res = await DataMovie.removeFavorite(profilId, movieId);
+          if (res.error) {
+            alert(res.error); // Affiche le message d'erreur si présent
+          } else if (res["Le film a bien été retiré de vos favoris"]) {
+            alert("Le film a bien été retiré de vos favoris.");
+          } else {
+            alert("Action effectuée avec succès.");
+          }
+          C.showFavorites(profilId); // Recharge les favoris
+        } catch (error) {
+          console.error("Erreur lors de la suppression des favoris :", error);
+          alert("Une erreur est survenue lors de la suppression des favoris.");
+        }
+      };
+
+      C.getFeaturedMovies = async function () {
+        let featuredMovies = await DataMovie.getFeaturedMovies();
+        V.renderFeaturedMovies(featuredMovies);
+      }
 
       window.V = {};
       /**
@@ -213,18 +224,18 @@
           return;
         }
 
-        let favoriteHtml = "";
+        let favoriteHtml = "<div class='favorite-list'>";
         for (let i = 0; i < favorites.length; i++) {
           let fav = favorites[i];
-          favoriteHtml += `
-            <div class="favorite-item">
-              <img src="https://mmi.unilim.fr/~trelat2/SAE2.03-starter-project/server/images/${fav.image}" alt="${fav.name}" onclick="C.handlerDetail"/>
-              <h3>${fav.name}</h3>
-              <button onclick="C.removeFavorites(${C.getSelectedProfileId()}, ${fav.id})">Retirer des favoris</button>
-            </div>
-          `;
+          favoriteHtml += `<div class="favorite-item">${MovieFavorite.formatLi(fav)}</div>`;
         }
+        favoriteHtml += "</div>";
         content.innerHTML = favoriteHtml;
+      };
+
+      V.renderFeaturedMovies = function (movies) {
+        let content = document.querySelector("#featured");
+        content.innerHTML = FeaturedMovies.formatLi(movies);
       };
 
       C.start(); // Démarre l'application

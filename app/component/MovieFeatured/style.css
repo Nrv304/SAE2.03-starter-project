@@ -1,0 +1,83 @@
+/* Conteneur principal de la section "À la une" */
+.featured-movie__container {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 1200px;
+    background-color: var(--color-bg);;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #fff;
+  }
+  
+  /* Titre de la section */
+  .featured-movies__title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--color-primary);
+  }
+  
+  /* Conteneur des films */
+  .featured-movies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  /* Carte individuelle d'un film */
+  .featured-movie {
+    background-color: var(--color-gray);
+    border-radius: 10px;
+    overflow: hidden;
+    width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .featured-movie:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Image du film */
+  .featured-movie__image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 2px solid var(--color-primary);
+  }
+  
+  /* Contenu du film */
+  .featured-movie__content {
+    padding: 15px;
+    text-align: center;
+  }
+  
+  /* Titre du film */
+  .featured-movie__title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  
+  /* Description du film */
+  .featured-movie__description {
+    font-size: 1rem;
+    color: #ccc;
+    line-height: 1.5;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .featured-movies {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .featured-movie {
+      width: 90%;
+    }
+  }

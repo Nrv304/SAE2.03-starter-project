@@ -2,18 +2,18 @@
 
 :root {
   /* Primitive Tokens */
-  --color-black: hsl(253, 69%, 8%);
+  --color-black: hsl(0, 0%, 0%);
   --color-white: hsl(0, 0%, 100%);
   --color-gray-light: hsl(0, 0%, 80%);
-  --color-gray: hsl(0, 0%, 50%);
+  --color-gray: hsla(0, 0%, 0%, 0.699);
   --color-gray-dark: hsl(0, 0%, 20%);
-  --color-green: hsl(120, 100%, 37%);
-  --color-green-dark: hsl(120, 100%, 27%);
+  --color-secondary: hsl(36, 83%, 64%);
+  --color-primary: hsl(36, 100%, 50%);
 
   --ff-sans: "DM sans", sans-serif;
 
   /* Sementic Tokens */
   --color-fg: var(--color-white);
   --color-bg: var(--color-gray-dark);
-  --color-accent: var(--color-green);
+  --color-accent: var(--color-primary);
 }

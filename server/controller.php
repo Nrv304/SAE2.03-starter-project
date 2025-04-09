@@ -128,3 +128,8 @@ function removeFavoritesController() {
     $ok = removeFavorites($id_profile, $id_movie);
     return $ok ? ["Le film a bien été retiré de vos favoris" => true] : ["error" => "Erreur lors de la suppression des favoris"];
 }
+
+function getFeaturedMoviesController() {
+    $movies = getFeaturedMovies();
+    return is_array($movies) ? $movies : [];
+}

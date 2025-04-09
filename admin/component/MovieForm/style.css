@@ -3,8 +3,7 @@
     max-width: 700px;
     margin: 20px auto;
     padding: 25px;
-    background-color: #ffffff;
-    border: 2px solid #e0e0e0;
+    background-color: var(--color-bg);
     border-radius: 10px;
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
     font-family: 'Roboto', sans-serif;
@@ -13,7 +12,7 @@
 .addMovies__title {
     font-size: 2rem;
     margin-bottom: 25px;
-    color: #222;
+    color: var(--color-accent);
     text-align: left;
     font-weight: bold;
 }
@@ -38,12 +37,12 @@
 .addMovies__form input:focus,
 .addMovies__form select:focus {
     outline: none;
-    border-color: var(--color-green);
+    border-color: var(--color-accent);
     box-shadow: 0 0 6px rgba(40, 167, 69, 0.5);
 }
 
 .addMovies__form input[type="button"] {
-    background-color: var(--color-green);
+    background-color: var(--color-accent);
     color: #fff;
     border: none;
     cursor: pointer;

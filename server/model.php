@@ -197,3 +197,10 @@ function isFavorites ($id_profil, $id_movie) {
     return $stmt->fetchColumn() > 0;
 
 }
+
+function getFeaturedMovies() {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT id, name, image, description FROM Movie WHERE is_featured = TRUE";
+    $stmt = $cnx->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
