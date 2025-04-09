@@ -158,3 +158,49 @@ function getProfiles() {
         return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
 
+function addFavorites($id_profil, $id_movie) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    $sql = "INSERT INTO Favorites (id_profil, id_movie) VALUES (:id_profil, :id_movie)";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_profil', $id_profil, PDO::PARAM_INT);
+    $stmt->bindParam(':id_movie', $id_movie, PDO::PARAM_INT);
+    return $stmt->execute();
+}
+
+function getFavorites($id_profil) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT Movie.id, Movie.name, Movie.image FROM Favorites 
+            JOIN Movie ON Favorites.id_movie = Movie.id 
+            WHERE Favorites.id_profil = :id_profil";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_profil', $id_profil, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+function removeFavorites($id_profil, $id_movie) {
+    try {
+        $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+        $sql = "DELETE FROM Favorites WHERE id_profil = :id_profil AND id_movie = :id_movie";
+        $stmt = $cnx->prepare($sql);
+        $stmt->bindParam(':id_profil', $id_profil, PDO::PARAM_INT);
+        $stmt->bindParam(':id_movie', $id_movie, PDO::PARAM_INT);
+        $result = $stmt->execute();
+        error_log("Requête SQL exécutée : $sql avec id_profil = $id_profil et id_movie = $id_movie");
+        return $result;
+    } catch (Exception $e) {
+        error_log("Erreur lors de la suppression des favoris : " . $e->getMessage());
+        return false;
+    }
+}
+
+function isFavorites ($id_profil, $id_movie) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT COUNT(*) FROM Favorites WHERE id_profil = :id_profil AND id_movie = :id_movie";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_profil', $id_profil, PDO::PARAM_INT);
+    $stmt->bindParam(':id_movie', $id_movie, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchColumn() > 0;
+
+}

@@ -7,15 +7,34 @@ let templateLi = await templateLiFile.text();
 let Films = {};
 
 // Formate les films avec le template principal
-Films.format = function (films) {
+Films.format = function (films, profileId, favorites) {
     let html = "";
-    films.forEach((film) => {
+    let i = 0;
+
+    favorites = Array.isArray(favorites) ? favorites : [];
+
+    while (i<films.length) {
         let filmHtml = template;
-        filmHtml = filmHtml.replace("{{titre}}", film.name);
-        filmHtml = filmHtml.replace("{{image}}", film.image);
-        filmHtml = filmHtml.replace("{{handler}}", `C.handlerDetail(${film.id})`);
-        html += filmHtml;
-    });
+        let movie = films[i];
+        filmHtml = filmHtml.replace("{{titre}}", movie.name);
+        filmHtml = filmHtml.replace("{{image}}", movie.image);
+        filmHtml = filmHtml.replace("{{handler}}", `C.handlerDetail(${movie.id})`);
+        let isFavorite = false
+        for (let fav of favorites) {
+            if (fav.id === movie.id) {
+                isFavorite = true;
+                break;
+            }
+        }
+        const favoritebutton = isFavorite
+            ? `<button disabled> Favoris</button>`
+            : `<button class="add-to-favorites-button" onclick="C.addFavorites(${movie.id}, ${profileId})">Ajouter aux favoris</button>`;
+            
+
+            filmHtml += favoritebutton;
+            html += filmHtml;
+            i++;
+    };
     return html;
 };
 

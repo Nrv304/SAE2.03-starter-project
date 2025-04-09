@@ -93,3 +93,38 @@ function readProfilesController() {
     $profiles = getProfiles();
     return $profiles ? $profiles : false;
 }
+
+function addFavoritesController() {
+    if (!isset($_REQUEST['id_profile']) || !isset($_REQUEST['id_movie'])) {
+        http_response_code(400); // Bad Request
+        return ["error" => "Paramètres manquants : id_profile ou id_movie"];
+    }
+
+    $id_profile = intval($_REQUEST['id_profile']);
+    $id_movie = intval($_REQUEST['id_movie']);
+
+    if (!$id_movie) {
+        http_response_code(400); // Bad Request
+        return ["error" => "ID de film invalide."];
+    }
+
+    if (isFavorites($id_profile, $id_movie)) {
+        return ["message" => "Le film est déjà dans vos favoris."];
+    }
+
+    $ok = addFavorites($id_profile, $id_movie);
+    return $ok ? ["message" => "Le film a été ajouté à vos favoris."] : ["error" => "Erreur lors de l'ajout aux favoris."];
+}
+
+function getFavoritesController() {
+    $id_profile = $_REQUEST['id_profile'];
+    error_log("ID Profil reçu : " . $id_profile);
+    return getFavorites($id_profile);
+}
+
+function removeFavoritesController() {
+    $id_profile = $_REQUEST['id_profile'];
+    $id_movie = $_REQUEST['id_movie'];
+    $ok = removeFavorites($id_profile, $id_movie);
+    return $ok ? ["Le film a bien été retiré de vos favoris" => true] : ["error" => "Erreur lors de la suppression des favoris"];
+}

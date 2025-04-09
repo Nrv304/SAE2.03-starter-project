@@ -14,7 +14,7 @@
 
     <script type="module">
       import { NavBar } from "./component/NavBar/script.js";
-      import { DataMovie} from "./data/dataMovie.js";
+      import { DataMovie } from "./data/dataMovie.js";
       import { Films } from "./component/film/script.js";
       import { MovieDetail } from "./component/MovieDetail/script.js";
       import { MovieCategory } from "./component/MovieCategory/script.js";
@@ -38,33 +38,34 @@
       };
 
       C.handlerProfileSelect = function (selectElement) {
-  const selectedProfileId = selectElement.value; // Récupère l'ID du profil sélectionné
-  C.activeProfileId = selectedProfileId; // Met à jour le profil actif
+        const selectedProfileId = selectElement.value; // Récupère l'ID du profil sélectionné
+        C.activeProfileId = selectedProfileId; // Met à jour le profil actif
 
-  // Récupère l'élément de l'avatar
-  const avatarElement = document.getElementById("profile-image");
+        // Récupère l'élément de l'avatar
+        const avatarElement = document.getElementById("profile-image");
 
-  // Si aucun profil n'est sélectionné, masque l'avatar
-  if (!selectedProfileId) {
-    avatarElement.style.display = "none";
-    return;
-  }
+        // Si aucun profil n'est sélectionné, masque l'avatar
+        if (!selectedProfileId) {
+          avatarElement.style.display = "none";
+          return;
+        }
 
-  // Sinon, met à jour l'avatar et l'affiche
-  const selectedOption = selectElement.options[selectElement.selectedIndex];
-  const avatarFileName = selectedOption.dataset.img || "default-avatar.jpg";
-  const avatarUrl = `https://mmi.unilim.fr/~trelat2/SAE2.03-starter-project/server/images/${avatarFileName}`;
-  avatarElement.src = avatarUrl;
-  avatarElement.style.display = "block";
+        // Sinon, met à jour l'avatar et l'affiche
+        const selectedOption =
+          selectElement.options[selectElement.selectedIndex];
+        const avatarFileName =
+          selectedOption.dataset.img || "default-avatar.jpg";
+        const avatarUrl = `https://mmi.unilim.fr/~trelat2/SAE2.03-starter-project/server/images/${avatarFileName}`;
+        avatarElement.src = avatarUrl;
+        avatarElement.style.display = "block";
 
-  // Recharge les films en fonction de l'âge du profil sélectionné
-  const age = parseInt(selectedOption.dataset.age, 10) || 0; // Récupère l'âge ou retourne 0
-  console.log("Avatar sélectionné :", avatarFileName);
-  console.log("Âge sélectionné :", age);
+        // Recharge les films en fonction de l'âge du profil sélectionné
+        const age = parseInt(selectedOption.dataset.age, 10) || 0; // Récupère l'âge ou retourne 0
+        console.log("Avatar sélectionné :", avatarFileName);
+        console.log("Âge sélectionné :", age);
 
-  C.getAllMovies(); // Recharge les films
-};
-
+        C.getAllMovies(); // Recharge les films
+      };
 
       C.getSelectedProfileAge = function () {
         const profileSelect = document.querySelector(".navbar__profile-select"); // Assurez-vous que l'élément existe
@@ -76,8 +77,22 @@
         return 0;
       };
 
+      C.getSelectedProfileId = function () {
+        const profileSelect = document.querySelector(".navbar__profile-select");
+        if (profileSelect) {
+          console.log("Profil sélectionné :", profileSelect.value);
+          return profileSelect.value || null;
+        }
+        console.log("Aucun profil sélectionné.");
+        return null;
+      };
+
       C.start = async function () {
-        V.renderNavBar("C.handlerAbout()", "C.handlerHome()","C.handlerProfileSelect(event)");
+        V.renderNavBar(
+          "C.handlerAbout()",
+          "C.handlerHome()",
+          "C.handlerProfileSelect(event)"
+        );
         C.getAllMovies();
         V.renderMovieDetail();
       };
@@ -95,7 +110,10 @@
           // Afficher les détails du film
           V.renderMovieDetail(movieDetails);
         } catch (error) {
-          console.error("Erreur lors de la récupération des détails du film :", error);
+          console.error(
+            "Erreur lors de la récupération des détails du film :",
+            error
+          );
           V.renderError("Impossible de charger les détails du film.");
         }
       };
@@ -106,6 +124,57 @@
         console.log("Données reçues :", data);
         V.renderMoviesCategory(data);
       };
+
+      C.addFavorites = async function (movieId) {
+        // Récupérez le profil actif
+        const profileId = C.getSelectedProfileId();
+
+        if (!profileId) {
+          alert("Veuillez sélectionner un profil avant d'ajouter un favori.");
+          return;
+        }
+
+        try {
+          let response = await DataMovie.addFavorite(movieId, profileId);
+          alert(response.message || "Film ajouté aux favoris avec succès."); // Affiche un message de confirmation
+          C.getAllMovies(); // Recharge la liste des films
+        } catch (error) {
+          console.error("Erreur lors de l'ajout aux favoris :", error);
+          alert("Une erreur est survenue lors de l'ajout aux favoris.");
+        }
+      };
+
+      C.showFavorites = async function (profilId) {
+        profilId = profilId || C.getSelectedProfileId();
+        if (!profilId) {
+          alert("Aucun profil sélectionné.");
+          return;
+        }
+        let data = await DataMovie.getFavorite(profilId);
+        V.renderFavorites(data);
+      };
+
+      C.removeFavorites = async function (profilId, movieId) {
+  profilId = profilId || C.getSelectedProfileId();
+  if (!profilId) {
+    alert("Aucun profil sélectionné.");
+    return;
+  }
+  try {
+    let res = await DataMovie.removeFavorite(profilId, movieId);
+    if (res.error) {
+      alert(res.error); // Affiche le message d'erreur si présent
+    } else if (res["Le film a bien été retiré de vos favoris"]) {
+      alert("Le film a bien été retiré de vos favoris.");
+    } else {
+      alert("Action effectuée avec succès.");
+    }
+    C.showFavorites(profilId); // Recharge les favoris
+  } catch (error) {
+    console.error("Erreur lors de la suppression des favoris :", error);
+    alert("Une erreur est survenue lors de la suppression des favoris.");
+  }
+};
 
       window.V = {};
       /**
@@ -133,6 +202,29 @@
       V.renderMovieDetail = function (movieData) {
         let content = document.querySelector("#content"); // Assurez-vous que l'élément cible est correct
         content.innerHTML = MovieDetail.format(movieData);
+      };
+
+      V.renderFavorites = function (favorites) {
+        let content = document.querySelector("#content");
+        content.innerHTML = "";
+
+        if (favorites.length === 0) {
+          content.innerHTML = "<p>Aucun film dans les favoris.</p>";
+          return;
+        }
+
+        let favoriteHtml = "";
+        for (let i = 0; i < favorites.length; i++) {
+          let fav = favorites[i];
+          favoriteHtml += `
+            <div class="favorite-item">
+              <img src="https://mmi.unilim.fr/~trelat2/SAE2.03-starter-project/server/images/${fav.image}" alt="${fav.name}" onclick="C.handlerDetail"/>
+              <h3>${fav.name}</h3>
+              <button onclick="C.removeFavorites(${C.getSelectedProfileId()}, ${fav.id})">Retirer des favoris</button>
+            </div>
+          `;
+        }
+        content.innerHTML = favoriteHtml;
       };
 
       C.start(); // Démarre l'application

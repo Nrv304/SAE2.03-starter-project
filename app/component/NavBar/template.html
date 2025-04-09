@@ -8,6 +8,6 @@
       <option value="" disabled selected>Choisir un profil</option>
       {{profileOptions}}
     </select>
-    <img id="profile-image" src="https://mmi.unilim.fr/~trelat2/SAE2.03-starter-project/server/images/{{image}}" alt="Avatar du profil" class="navbar__profile-avatar" style="display: none;">
+    <img id="profile-image" src="https://mmi.unilim.fr/~trelat2/SAE2.03-starter-project/server/images/{{image}}" alt="Avatar du profil" class="navbar__profile-avatar" style="display: none;" onclick="C.showFavorites(C.getSelectedProfileId())"/>
   </div>
 </nav>
