@@ -8,17 +8,20 @@ let Films = {};
 
 // Formate les films avec le template principal
 Films.format = function (films, profileId, favorites) {
-    let html = "";
     let i = 0;
 
     favorites = Array.isArray(favorites) ? favorites : [];
 
-    while (i<films.length) {
         let filmHtml = template;
         let movie = films[i];
         filmHtml = filmHtml.replace("{{titre}}", movie.name);
         filmHtml = filmHtml.replace("{{image}}", movie.image);
         filmHtml = filmHtml.replace("{{handler}}", `C.handlerDetail(${movie.id})`);
+
+        if (!favorites || !Array.isArray(favorites)) {
+            favorites = [];
+          }
+
         let isFavorite = false
         for (let fav of favorites) {
             if (fav.id === movie.id) {
@@ -28,14 +31,11 @@ Films.format = function (films, profileId, favorites) {
         }
         const favoritebutton = isFavorite
             ? `<button disabled> Favoris</button>`
-            : `<button class="add-to-favorites-button" onclick="C.addFavorites(${movie.id}, ${profileId})">Ajouter aux favoris</button>`;
+            : `<button onclick="C.addFavorites(${movie.id}, ${profileId})">Ajouter aux favoris</button>`;
             
-
-            filmHtml += favoritebutton;
-            html += filmHtml;
+            filmHtml = filmHtml.replace("{{button}}", favoritebutton);
             i++;
-    };
-    return html;
+    return filmHtml;
 };
 
 // Insère les films formatés dans le conteneur défini par template_li

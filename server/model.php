@@ -20,17 +20,10 @@ define("DBPWD", "trelat2");
 
 
 function getAllMovies(){
-    try {
-        $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD, [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        ]);
-        $sql = "SELECT id, name, image FROM Movie";
-        $answer = $cnx->query($sql);
-        return $answer->fetchAll(PDO::FETCH_OBJ);
-    } catch (Exception $e) {
-        error_log("Erreur SQL : " . $e->getMessage());
-        return false;
-    }
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT id, name, image FROM Movie";
+    $answer = $cnx->query($sql);
+    return $answer->fetchAll(PDO::FETCH_OBJ);;
 }
 
 function addMovies($l, $d, $y, $n, $r, $i, $t, $m, $id){
