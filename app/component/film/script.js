@@ -10,7 +10,6 @@ let Films = {};
 Films.format = function (films, profileId, favorites) {
     let i = 0;
 
-    favorites = Array.isArray(favorites) ? favorites : [];
 
         let filmHtml = template;
         let movie = films[i];
@@ -31,7 +30,7 @@ Films.format = function (films, profileId, favorites) {
         }
         const favoritebutton = isFavorite
             ? `<button disabled> Favoris</button>`
-            : `<button onclick="C.addFavorites(${movie.id}, ${profileId})">Ajouter aux favoris</button>`;
+            : `<button class="add-to-favorites-button" onclick="C.addFavorites(${movie.id}, ${profileId})">Ajouter aux favoris</button>`;
             
             filmHtml = filmHtml.replace("{{button}}", favoritebutton);
             i++;
