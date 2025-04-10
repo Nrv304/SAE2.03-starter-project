@@ -133,3 +133,16 @@ function getFeaturedMoviesController() {
     $movies = getFeaturedMovies();
     return is_array($movies) ? $movies : [];
 }
+
+function searchMoviesController() {
+    $keyword = isset($_REQUEST['keyword']) ? $_REQUEST['keyword'] : '';
+    $category = isset($_REQUEST['category']) ? intval($_REQUEST['category']) : null;
+    $year = isset($_REQUEST['year']) ? intval($_REQUEST['year']) : null;
+
+    if (empty($keyword)) {
+        return [];
+    }
+
+    $movies = searchMovies($keyword, $category, $year);
+    return $movies ? $movies : [];
+}

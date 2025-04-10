@@ -10,7 +10,7 @@
   <body>
     <header id="header"></header>
 
-    <section id = "featured"></section>
+    <section id="featured"></section>
 
     <section id="content"></section>
 
@@ -38,6 +38,7 @@
       };
 
       C.handlerHome = function () {
+        document.querySelector("#featured").style.display = "block";
         C.getAllMovies(); // Appelle la fonction pour récupérer et afficher tous les films
       };
 
@@ -59,7 +60,7 @@
           selectElement.options[selectElement.selectedIndex];
         const avatarFileName =
           selectedOption.dataset.img || "default-avatar.jpg";
-        const avatarUrl = `https://mmi.unilim.fr/~trelat2/SAE2.03-starter-project/server/images/${avatarFileName}`;
+        const avatarUrl = `../server/images/${avatarFileName}`;
         avatarElement.src = avatarUrl;
         avatarElement.style.display = "block";
 
@@ -97,13 +98,13 @@
           "C.handlerHome()",
           "C.handlerProfileSelect(event)"
         );
+        document.querySelector("#featured").style.display = "block";
         C.getAllMovies();
         C.getFeaturedMovies();
-        V.renderMovieDetail();
-        
       };
 
       C.handlerDetail = async function (movieId) {
+        document.querySelector("#featured").style.display = "none";
         try {
           // Récupérer les détails du film depuis le serveur
           let movieDetails = await DataMovie.requestMovieDetails(movieId);
@@ -151,6 +152,7 @@
       };
 
       C.showFavorites = async function (profilId) {
+        document.querySelector("#featured").style.display = "none";
         profilId = profilId || C.getSelectedProfileId();
         if (!profilId) {
           alert("Aucun profil sélectionné.");
@@ -161,6 +163,7 @@
       };
 
       C.removeFavorites = async function (profilId, movieId) {
+        document.querySelector("#featured").style.display = "none";
         profilId = profilId || C.getSelectedProfileId();
         if (!profilId) {
           alert("Aucun profil sélectionné.");
@@ -186,6 +189,24 @@
         let featuredMovies = await DataMovie.getFeaturedMovies();
         V.renderFeaturedMovies(featuredMovies);
       }
+
+      C.searchMovies = async function () {
+        document.querySelector("#featured").style.display = "none";
+        const searchInput = document.querySelector("#search-input").value.trim(); // Renommé pour éviter le conflit
+
+        if (!searchInput) {
+          console.error("Aucun mot-clé fourni pour la recherche.");
+          return;
+        }
+
+        const movies = await DataMovie.searchMovies(searchInput);
+        if (movies && movies.length > 0) {
+          V.renderMovies(movies);
+        } else {
+          console.log("Aucun film trouvé pour le mot-clé :", searchInput);
+          V.renderMovies([]);
+        }
+      };
 
       window.V = {};
       /**

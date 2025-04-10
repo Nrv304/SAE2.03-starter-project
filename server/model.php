@@ -46,80 +46,70 @@ function addMovies($l, $d, $y, $n, $r, $i, $t, $m, $id){
 }
 
 function getMovieDetail($id) {
-    try {
-        $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD, [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        ]);
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ]);
 
-        $sql = "SELECT 
-                    Movie.id, 
-                    Movie.name, 
-                    Movie.director, 
-                    Movie.year, 
-                    Movie.length, 
-                    Movie.description, 
-                    Movie.image, 
-                    Movie.trailer, 
-                    Movie.min_age, 
-                    Movie.id_category, 
-                    Category.name AS category
-                FROM Movie
-                JOIN Category ON Movie.id_category = Category.id
-                WHERE Movie.id = :id";
+    $sql = "SELECT 
+                Movie.id, 
+                Movie.name, 
+                Movie.director, 
+                Movie.year, 
+                Movie.length, 
+                Movie.description, 
+                Movie.image, 
+                Movie.trailer, 
+                Movie.min_age, 
+                Movie.id_category, 
+                Category.name AS category
+            FROM Movie
+            JOIN Category ON Movie.id_category = Category.id
+            WHERE Movie.id = :id";
 
-        $stmt = $cnx->prepare($sql);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
 
-        return $stmt->fetch(PDO::FETCH_OBJ);
-    } catch (Exception $e) {
-        error_log("Erreur SQL : " . $e->getMessage());
-        return false;
-    }
+    return $stmt->fetch(PDO::FETCH_OBJ);
 }
 
 function getMoviesCategory($age) {
-    try {
-        $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD, [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        ]);
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ]);
 
-        $sql = "SELECT 
-                    Category.id AS category_id, 
-                    Category.name AS category_name, 
-                    Movie.id AS movie_id, 
-                    Movie.name AS movie_name, 
-                    Movie.image AS movie_image
-                FROM Movie
-                JOIN Category ON Movie.id_category = Category.id
-                WHERE :age = 0 OR Movie.min_age <= :age
-                ORDER BY Category.name, Movie.name";
+    $sql = "SELECT 
+                Category.id AS category_id, 
+                Category.name AS category_name, 
+                Movie.id AS movie_id, 
+                Movie.name AS movie_name, 
+                Movie.image AS movie_image
+            FROM Movie
+            JOIN Category ON Movie.id_category = Category.id
+            WHERE :age = 0 OR Movie.min_age <= :age
+            ORDER BY Category.name, Movie.name";
 
-        $stmt = $cnx->prepare($sql); // Utilisez prepare() au lieu de query()
-        $stmt->bindParam(':age', $age, PDO::PARAM_INT); // Assurez-vous que :age est correctement lié
-        $stmt->execute(); // Exécutez la requête
-        $rows = $stmt->fetchAll(PDO::FETCH_OBJ);
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':age', $age, PDO::PARAM_INT);
+    $stmt->execute();
+    $rows = $stmt->fetchAll(PDO::FETCH_OBJ);
 
-        $categories = [];
-        foreach ($rows as $row) {
-            if (!isset($categories[$row->category_id])) {
-                $categories[$row->category_id] = [
-                    "name" => $row->category_name,
-                    "movies" => []
-                ];
-            }
-            $categories[$row->category_id]["movies"][] = [
-                "id" => $row->movie_id,
-                "name" => $row->movie_name,
-                "image" => $row->movie_image
+    $categories = array_reduce($rows, function ($carry, $row) {
+        if (!isset($carry[$row->category_id])) {
+            $carry[$row->category_id] = [
+                "name" => $row->category_name,
+                "movies" => []
             ];
         }
+        $carry[$row->category_id]["movies"][] = [
+            "id" => $row->movie_id,
+            "name" => $row->movie_name,
+            "image" => $row->movie_image
+        ];
+        return $carry;
+    }, []);
 
-        return array_values($categories);
-    } catch (Exception $e) {
-        error_log("Erreur SQL : " . $e->getMessage());
-        return false;
-    }
+    return array_values($categories);
 }
 
 function addProfile($id, $name, $avatar, $min_age) {
@@ -135,13 +125,8 @@ function addProfile($id, $name, $avatar, $min_age) {
     $stmt->bindParam(':avatar', $avatar, PDO::PARAM_STR);
     $stmt->bindParam(':min_age', $min_age, PDO::PARAM_INT);
 
-    try {
-        $stmt->execute();
-        return $stmt->rowCount();
-    } catch (Exception $e) {
-        error_log("Erreur SQL : " . $e->getMessage());
-        return false;
-    }
+    $stmt->execute();
+    return $stmt->rowCount();
 }
 
 function getProfiles() {
@@ -172,19 +157,12 @@ function getFavorites($id_profil) {
 }
 
 function removeFavorites($id_profil, $id_movie) {
-    try {
-        $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
-        $sql = "DELETE FROM Favorites WHERE id_profil = :id_profil AND id_movie = :id_movie";
-        $stmt = $cnx->prepare($sql);
-        $stmt->bindParam(':id_profil', $id_profil, PDO::PARAM_INT);
-        $stmt->bindParam(':id_movie', $id_movie, PDO::PARAM_INT);
-        $result = $stmt->execute();
-        error_log("Requête SQL exécutée : $sql avec id_profil = $id_profil et id_movie = $id_movie");
-        return $result;
-    } catch (Exception $e) {
-        error_log("Erreur lors de la suppression des favoris : " . $e->getMessage());
-        return false;
-    }
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    $sql = "DELETE FROM Favorites WHERE id_profil = :id_profil AND id_movie = :id_movie";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_profil', $id_profil, PDO::PARAM_INT);
+    $stmt->bindParam(':id_movie', $id_movie, PDO::PARAM_INT);
+    return $stmt->execute();
 }
 
 function isFavorites ($id_profil, $id_movie) {
@@ -202,5 +180,39 @@ function getFeaturedMovies() {
     $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
     $sql = "SELECT id, name, image, description FROM Movie WHERE is_featured = TRUE";
     $stmt = $cnx->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+function searchMovies($keyword, $category = null, $year = null) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    
+    $sql = "SELECT 
+                Movie.id, 
+                Movie.name, 
+                Movie.image, 
+                Movie.is_featured, 
+                Category.name AS category 
+            FROM Movie
+            LEFT JOIN Category ON Movie.id_category = Category.id
+            WHERE Movie.name LIKE :keyword";
+    
+    if ($category) {
+        $sql .= " AND Movie.id_category = :category";
+    }
+    if ($year) {
+        $sql .= " AND Movie.year = :year";
+    }
+
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindValue(':keyword', '%' . $keyword . '%', PDO::PARAM_STR);
+
+    if ($category) {
+        $stmt->bindValue(':category', $category, PDO::PARAM_INT);
+    }
+    if ($year) {
+        $stmt->bindValue(':year', $year, PDO::PARAM_INT);
+    }
+
+    $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
