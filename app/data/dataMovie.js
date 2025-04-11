@@ -16,7 +16,6 @@ DataMovie.requestMovieDetails = async function (movieId) {
 
 DataMovie.requestMovieCategory = async function (age) {
   const url = `${HOST_URL}/script.php?todo=getMovieCategory&age=${age}`;
-  console.log("URL générée :", url);
   let answer = await fetch(url);
   let movieCategory = await answer.json();
   return movieCategory;
@@ -24,7 +23,6 @@ DataMovie.requestMovieCategory = async function (age) {
 
 DataMovie.addFavorite = async function (movieId, profileId) {
   const url = `${HOST_URL}/script.php?todo=addFavorites&id_profile=${profileId}&id_movie=${movieId}`;
-  console.log("URL générée pour ajouter aux favoris :", url);
   let answer = await fetch(url);
   if (!answer.ok) {
     throw new Error("Erreur lors de la requête au serveur.");
@@ -35,7 +33,6 @@ DataMovie.addFavorite = async function (movieId, profileId) {
 
 DataMovie.getFavorite = async function (profileId) {
   const url = `${HOST_URL}/script.php?todo=getFavorites&id_profile=${profileId}`;
-  console.log("URL générée pour récupérer les favoris :", url); // Ajoutez cette ligne pour déboguer
   let answer = await fetch(url);
   let favoriteResponse = await answer.json();
   return favoriteResponse;
@@ -43,7 +40,6 @@ DataMovie.getFavorite = async function (profileId) {
 
 DataMovie.removeFavorite = async function (profileId, movieId) {
   const url = `${HOST_URL}/script.php?todo=removeFavorites&id_profile=${profileId}&id_movie=${movieId}`;
-  console.log("URL générée pour supprimer des favoris :", url);
   let answer = await fetch(url);
   let favoriteResponse = await answer.json();
   return favoriteResponse;
@@ -60,6 +56,13 @@ DataMovie.searchMovies = async function (keyword) {
   let answer = await fetch(url);
   let movies = await answer.json();
   return movies;
+};
+
+DataMovie.addRating = async function (movieId, profileId, rating) {
+  const url = `${HOST_URL}/script.php?todo=addRating&id_movie=${movieId}&rating=${rating}&id_profil=${profileId}`;
+  let response = await fetch(url);
+  let jsonResponse = await response.json();
+  return jsonResponse;
 };
 
 export { DataMovie };

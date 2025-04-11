@@ -14,6 +14,11 @@ MovieDetail.format = function (film) {
   html = html.replace("{{movieAgeRestriction}}", film.min_age);
   html = html.replace("{{movieTrailerUrl}}", film.trailer);
   html = html.replace("{{image}}", film.image);
+  html = html.replace("{{onclick}}", `C.addRating(${film.id})`);
+
+  let averageRating = film.average_rating || 0;
+  html = html.replace("{{averageRating}}", averageRating);
+
   return html;
 };
 

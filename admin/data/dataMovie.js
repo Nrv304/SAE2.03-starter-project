@@ -16,5 +16,26 @@ DataMovie.addMovie = async function (movie) {
     return data;
   };
 
+  DataMovie.searchMovies = async function (keyword) {
+    const url = `${HOST_URL}/script.php?todo=searchMovies&keyword=${encodeURIComponent(keyword)}`;
+    let answer = await fetch(url);
+    let movies = await answer.json();
+    return movies;
+  };
+  
+  DataMovie.updateFeaturedStatus = async function (id_movie, is_featured) {
+    const url = `${HOST_URL}/script.php?todo=updateFeaturedStatus&movie_id=${id_movie}&is_featured=${is_featured}`;
+    let answer = await fetch(url);
+
+    if (!answer.ok) {
+        console.error(`Erreur HTTP : ${answer.status}`);
+        return { success: false, error: `Erreur HTTP : ${answer.status}` };
+    }
+
+    return answer.json().catch((error) => {
+        console.error("Erreur lors du traitement de la réponse JSON :", error);
+        return { success: false, error: "Réponse invalide du serveur." };
+    });
+};
 
 export { DataMovie };

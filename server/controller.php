@@ -146,3 +146,34 @@ function searchMoviesController() {
     $movies = searchMovies($keyword, $category, $year);
     return $movies ? $movies : [];
 }
+
+function updateFeaturedStatusController() {
+    $id_movie = $_REQUEST['movie_id'];
+    $is_featured = $_REQUEST['is_featured'] === 'true' ? true : false;
+
+    $ok = setFeaturedStatus($id_movie, $is_featured);
+
+    if ($ok) {
+        return ["success" => true, "message" => "Le statut du film a été mis à jour avec succès."];
+    } else {
+        return ["success" => false, "error" => "Erreur lors de la mise à jour du statut."];
+    }
+}
+
+function addRatingController() {
+    $id_profil = $_REQUEST['id_profil'];
+    $id_movie = $_REQUEST['id_movie'];
+    $rating = intval($_REQUEST['rating']);
+
+    if (hasRated($id_profil, $id_movie)) {
+        return ["error" => "Vous avez déjà noté ce film."];
+    }
+
+    $ok = addRating($id_profil, $id_movie, $rating);
+    return $ok ? ["message" => "Votre note a été enregistrée."] : ["error" => "Erreur lors de l'enregistrement de la note."];
+}
+
+function getAverageRatingController() {
+    $id_movie = intval($_REQUEST['id_movie']);
+    return getAverageRating($id_movie);
+}

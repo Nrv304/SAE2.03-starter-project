@@ -208,6 +208,25 @@
         }
       };
 
+      C.addRating = async function (movieId) {
+        const rating = document.querySelector("#rating").value;
+        const profileId = C.getSelectedProfileId();
+
+        if (!profileId) {
+          alert("Veuillez sélectionner un profil avant de noter un film.");
+          return;
+        }
+
+        try {
+          let response = await DataMovie.addRating(movieId, profileId, rating);
+          alert(response.message || "Note ajoutée avec succès.");
+          C.getAllMovies(); // Recharge la liste des films
+        } catch (error) {
+          console.error("Erreur lors de l'ajout de la note :", error);
+          alert("Une erreur est survenue lors de l'ajout de la note.");
+        }
+      };
+
       window.V = {};
       /**
        * V.renderNavBar

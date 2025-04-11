@@ -107,3 +107,72 @@
     transform: scale(1.02);
     filter: brightness(1.05);
 }
+
+.movie-rating {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: var(--color-bg);
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.418);
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    color: var(--color-secondary);
+}
+
+.movie-rating h2 {
+    font-size: 2rem;
+    color: var(--color-primary);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.movie-rating .average-rating {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: var(--color-secondary);
+}
+
+#rating-interface {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+#rating-interface label {
+    font-size: 1.2rem;
+    color: var(--color-secondary);
+}
+
+#rating-interface select {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid var(--color-gray);
+    border-radius: 8px;
+    background-color: var(--color-bg);
+    color: var(--color-secondary);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#rating-interface select:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 5px var(--color-primary);
+    outline: none;
+}
+
+#rating-interface button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: var(--color-primary);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#rating-interface button:hover {
+    background-color: var(--color-secondary);
+    transform: scale(1.05);
+}

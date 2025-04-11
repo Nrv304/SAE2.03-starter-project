@@ -185,7 +185,6 @@ function getFeaturedMovies() {
 
 function searchMovies($keyword, $category = null, $year = null) {
     $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
-    
     $sql = "SELECT 
                 Movie.id, 
                 Movie.name, 
@@ -215,4 +214,45 @@ function searchMovies($keyword, $category = null, $year = null) {
 
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+function setFeaturedStatus($id_movie, $is_featured) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    $sql = "UPDATE Movie SET is_featured = :is_featured WHERE id = :id_movie";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':is_featured', $is_featured, PDO::PARAM_BOOL);
+    $stmt->bindParam(':id_movie', $id_movie, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->rowCount() > 0;
+}
+
+function addRating($id_profil, $id_movie, $rating) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    $sql = "INSERT INTO Ratings (id_profil, id_movie, rating) 
+            VALUES (:id_profil, :id_movie, :rating)";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_profil', $id_profil, PDO::PARAM_INT);
+    $stmt->bindParam(':id_movie', $id_movie, PDO::PARAM_INT);
+    $stmt->bindParam(':rating', $rating, PDO::PARAM_INT);
+    return $stmt->execute();
+}
+
+function getAverageRating($id_movie) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT AVG(rating) AS average_rating FROM Ratings WHERE id_movie = :id_movie";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_movie', $id_movie, PDO::PARAM_INT);
+    $stmt->execute();
+    $average = $stmt->fetch(PDO::FETCH_OBJ)->average_rating ?? 0;
+    return round($average, 1);
+}
+
+function hasRated($id_profil, $id_movie) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT COUNT(*) FROM Ratings WHERE id_profil = :id_profil AND id_movie = :id_movie";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_profil', $id_profil, PDO::PARAM_INT);
+    $stmt->bindParam(':id_movie', $id_movie, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchColumn() > 0;
 }
