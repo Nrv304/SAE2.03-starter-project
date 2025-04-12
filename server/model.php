@@ -243,8 +243,8 @@ function getAverageRating($id_movie) {
     $stmt = $cnx->prepare($sql);
     $stmt->bindParam(':id_movie', $id_movie, PDO::PARAM_INT);
     $stmt->execute();
-    $average = $stmt->fetch(PDO::FETCH_OBJ)->average_rating ?? 0;
-    return round($average, 1);
+    $average = $stmt->fetch(PDO::FETCH_OBJ)->average_rating;
+    return $average !== null ? round($average, 1) : 0;
 }
 
 function hasRated($id_profil, $id_movie) {

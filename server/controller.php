@@ -174,6 +174,6 @@ function addRatingController() {
 }
 
 function getAverageRatingController() {
-    $id_movie = intval($_REQUEST['id_movie']);
+    $id_movie = $_REQUEST['id_movie'];
     return getAverageRating($id_movie);
 }

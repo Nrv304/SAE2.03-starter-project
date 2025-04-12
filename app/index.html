@@ -105,24 +105,9 @@
 
       C.handlerDetail = async function (movieId) {
         document.querySelector("#featured").style.display = "none";
-        try {
           // Récupérer les détails du film depuis le serveur
-          let movieDetails = await DataMovie.requestMovieDetails(movieId);
-
-          // Vérifiez si les données sont valides
-          if (!movieDetails || !movieDetails.name) {
-            throw new Error("Les détails du film sont invalides ou manquants.");
-          }
-
-          // Afficher les détails du film
+          const movieDetails = await DataMovie.requestMovieDetails(movieId);
           V.renderMovieDetail(movieDetails);
-        } catch (error) {
-          console.error(
-            "Erreur lors de la récupération des détails du film :",
-            error
-          );
-          V.renderError("Impossible de charger les détails du film.");
-        }
       };
 
       C.getAllMovies = async function () {

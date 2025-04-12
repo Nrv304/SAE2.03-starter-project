@@ -11,6 +11,10 @@ DataMovie.getAll = async function () {
 DataMovie.requestMovieDetails = async function (movieId) {
   let answer = await fetch(`${HOST_URL}/script.php?todo=readMovieDetail&id=${movieId}`);
   let movieDetails = await answer.json();
+
+  let averageRating = await fetch(`${HOST_URL}/script.php?todo=getAverageRating&movie_id=${movieId}`);
+  movieDetails.average_rating = await averageRating.json();
+  
   return movieDetails;
 };
 
