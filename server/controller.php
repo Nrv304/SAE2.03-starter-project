@@ -177,3 +177,51 @@ function getAverageRatingController() {
     $id_movie = $_REQUEST['id_movie'];
     return getAverageRating($id_movie);
 }
+
+function addCommentController() {
+    if (!isset($_REQUEST['id_movie']) || !isset($_REQUEST['id_profile']) || !isset($_REQUEST['comment_text'])) {
+        return false;
+    }
+
+    $id_movie = intval($_REQUEST['id_movie']);
+    $id_profile = intval($_REQUEST['id_profile']);
+    $comment_text = $_REQUEST['comment_text'];
+
+    $ok = addComment($id_movie, $id_profile, $comment_text);
+    return $ok ? ["message" => "Commentaire ajouté avec succès."] : ["error" => "Erreur lors de l'ajout du commentaire."];
+}
+
+function getCommentsController() {
+    if (!isset($_REQUEST['id_movie'])) {
+        return false;
+    }
+
+    $id_movie = intval($_REQUEST['id_movie']);
+    $comments = getComments($id_movie);
+    return $comments ? $comments : [];
+}
+
+function getPendingCommentsController() {
+    $comments = getPendingComments();
+    return $comments ? $comments : [];
+}
+
+function approveCommentController() {
+    if (!isset($_REQUEST['id'])) {
+        return ["error" => "ID du commentaire manquant"];
+    }
+
+    $commentId = intval($_REQUEST['id']);
+    $ok = approveComment($commentId);
+    return $ok ? ["message" => "Le commentaire a été approuvé avec succès."] : ["error" => "Erreur lors de l'approbation du commentaire."];
+}
+
+function deleteCommentController() {
+    if (!isset($_REQUEST['id'])) {
+        return ["error" => "ID du commentaire manquant"];
+    }
+
+    $commentId = intval($_REQUEST['id']);
+    $ok = deleteComment($commentId);
+    return $ok ? ["message" => "Le commentaire a été supprimé avec succès."] : ["error" => "Erreur lors de la suppression du commentaire."];
+}

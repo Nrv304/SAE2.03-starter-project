@@ -38,4 +38,22 @@ DataMovie.addMovie = async function (movie) {
     });
 };
 
+DataMovie.getPendingComments = async function () {
+  const url = `${HOST_URL}/script.php?todo=getPendingComments`;
+  const response = await fetch(url);
+  return await response.json();
+};
+
+DataMovie.approveComment = async function (commentId) {
+  const url = `${HOST_URL}/script.php?todo=approveComment&id=${commentId}`;
+  const response = await fetch(url);
+  return await response.json();
+};
+
+DataMovie.deleteComment = async function (commentId) {
+  const url = `${HOST_URL}/script.php?todo=deleteComment&id=${commentId}`;
+  const response = await fetch(url);
+  return await response.json();
+};
+
 export { DataMovie };

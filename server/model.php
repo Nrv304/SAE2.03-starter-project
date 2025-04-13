@@ -256,3 +256,53 @@ function hasRated($id_profil, $id_movie) {
     $stmt->execute();
     return $stmt->fetchColumn() > 0;
 }
+
+function addComment($id_movie, $id_profile, $comment_text) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    $sql = "INSERT INTO Comments (id_movie, id_profile, comment_text) VALUES (:id_movie, :id_profile, :comment_text)";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_movie', $id_movie, PDO::PARAM_INT);
+    $stmt->bindParam(':id_profile', $id_profile, PDO::PARAM_INT);
+    $stmt->bindParam(':comment_text', $comment_text, PDO::PARAM_STR);
+    return $stmt->execute();
+}
+
+function getComments($id_movie) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT Comments.comment_text, Comments.created_at, Profil.name AS profile_name 
+            FROM Comments 
+            JOIN Profil ON Comments.id_profile = Profil.id 
+            WHERE Comments.id_movie = :id_movie 
+            ORDER BY Comments.created_at DESC";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_movie', $id_movie, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+function getPendingComments() {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT Comments.id, Comments.comment_text, Comments.created_at, Profil.name AS profile_name, Comments.status 
+            FROM Comments 
+            JOIN Profil ON Comments.id_profile = Profil.id 
+            WHERE Comments.status = 'pending' 
+            ORDER BY Comments.created_at DESC";
+    $stmt = $cnx->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+function approveComment($commentId) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    $sql = "UPDATE Comments SET status = 'approved' WHERE id = :id";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id', $commentId, PDO::PARAM_INT);
+    return $stmt->execute();
+}
+
+function deleteComment($commentId) {
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    $sql = "DELETE FROM Comments WHERE id = :id";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id', $commentId, PDO::PARAM_INT);
+    return $stmt->execute();
+}

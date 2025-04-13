@@ -7,12 +7,12 @@ let templateLi = await templateLiFile.text();
 let Films = {};
 
 // Formate les films avec le template principal
-Films.format = function (films, profileId, favorites) {
+Films.format = function (films, profileId, favorites, recentMovies = []) {
     if (!favorites || !Array.isArray(favorites)) {
         favorites = [];
     }
 
-    let allFilmsHtml = ""; // Contiendra le HTML de tous les films
+    let allFilmsHtml = "";
 
     for (let i = 0; i < films.length; i++) {
         let movie = films[i];
@@ -21,6 +21,11 @@ Films.format = function (films, profileId, favorites) {
         filmHtml = filmHtml.replace("{{titre}}", movie.name);
         filmHtml = filmHtml.replace("{{image}}", movie.image);
         filmHtml = filmHtml.replace("{{handler}}", `C.handlerDetail(${movie.id})`);
+
+        // Vérifiez si le film est récent
+        const isRecent = recentMovies.some(recent => recent.id === movie.id);
+        const newTag = isRecent ? `<span class="new-tag">New</span>` : "";
+        filmHtml = filmHtml.replace("{{newTag}}", newTag);
 
         let isFavorite = false;
         for (let fav of favorites) {
@@ -35,11 +40,12 @@ Films.format = function (films, profileId, favorites) {
             : `<button class="add-to-favorites-button" onclick="C.addFavorites(${movie.id}, ${profileId})">Ajouter aux favoris</button>`;
 
         filmHtml = filmHtml.replace("{{button}}", favoritebutton);
+         console.log(`Film : ${movie.name}, Est récent : ${isRecent}`);
 
-        allFilmsHtml += filmHtml; // Ajoute le HTML du film courant au résultat
+        allFilmsHtml += filmHtml;
     }
 
-    return allFilmsHtml; // Retourne le HTML combiné de tous les films
+    return allFilmsHtml;
 };
 
 // Insère les films formatés dans le conteneur défini par template_li

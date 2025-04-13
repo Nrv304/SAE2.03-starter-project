@@ -23,6 +23,7 @@
       import { DataProfile } from "./data/dataProfile.js";
       import { MovieFavorite } from "./component/MovieFavorite/script.js";
       import { FeaturedMovies } from "./component/MovieFeatured/script.js";
+      import { MovieComment } from "./component/MovieComment/script.js";
 
       // Controleur
       // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
@@ -104,11 +105,38 @@
       };
 
       C.handlerDetail = async function (movieId) {
+        if (!movieId) {
+          console.error("movieId est invalide ou non défini.");
+          alert("Impossible de charger les détails du film.");
+          return;
+        }
+
+        // Masquer la section des films en vedette
         document.querySelector("#featured").style.display = "none";
-          // Récupérer les détails du film depuis le serveur
-          const movieDetails = await DataMovie.requestMovieDetails(movieId);
-          V.renderMovieDetail(movieDetails);
+
+        // Récupérer les détails du film et les commentaires associés
+        const movieDetails = await DataMovie.requestMovieDetails(movieId);
+        const comments = await DataMovie.getComments(movieId);
+        movieDetails.comments = comments;
+
+        // Rendre les détails du film
+        V.renderMovieDetail(movieDetails);
+
+        // Charger les commentaires
+        MovieComment.loadcomment(movieId);
       };
+
+      // Gestionnaire d'événements pour le bouton d'envoi de commentaire
+      document.addEventListener("click", (event) => {
+        if (event.target && event.target.id === "submit-comment") {
+          const movieId = event.target.dataset.movieId; // Assurez-vous que le bouton a un attribut data-movie-id
+          if (!movieId) {
+            alert("L'ID du film est manquant.");
+            return;
+          }
+          MovieComment.addComment(movieId); // Appel à la méthode C.addComment pour ajouter un commentaire
+        }
+      });
 
       C.getAllMovies = async function () {
         const age = C.getSelectedProfileAge();
@@ -118,7 +146,6 @@
       };
 
       C.addFavorites = async function (movieId) {
-        // Récupérez le profil actif
         const profileId = C.getSelectedProfileId();
 
         if (!profileId) {
@@ -126,15 +153,11 @@
           return;
         }
 
-        try {
-          let response = await DataMovie.addFavorite(movieId, profileId);
-          alert(response.message || "Film ajouté aux favoris avec succès."); // Affiche un message de confirmation
-          C.getAllMovies(); // Recharge la liste des films
-        } catch (error) {
-          console.error("Erreur lors de l'ajout aux favoris :", error);
-          alert("Une erreur est survenue lors de l'ajout aux favoris.");
-        }
+        let response = await DataMovie.addFavorite(movieId, profileId);
+        alert(response.message || "Film ajouté aux favoris avec succès.");
+        C.getAllMovies(); // Recharge la liste des films
       };
+
 
       C.showFavorites = async function (profilId) {
         document.querySelector("#featured").style.display = "none";
@@ -154,20 +177,16 @@
           alert("Aucun profil sélectionné.");
           return;
         }
-        try {
-          let res = await DataMovie.removeFavorite(profilId, movieId);
-          if (res.error) {
-            alert(res.error); // Affiche le message d'erreur si présent
-          } else if (res["Le film a bien été retiré de vos favoris"]) {
-            alert("Le film a bien été retiré de vos favoris.");
-          } else {
-            alert("Action effectuée avec succès.");
-          }
-          C.showFavorites(profilId); // Recharge les favoris
-        } catch (error) {
-          console.error("Erreur lors de la suppression des favoris :", error);
-          alert("Une erreur est survenue lors de la suppression des favoris.");
+
+        let res = await DataMovie.removeFavorite(profilId, movieId);
+        if (res.error) {
+          alert(res.error); // Affiche le message d'erreur si présent
+        } else if (res["Le film a bien été retiré de vos favoris"]) {
+          alert("Le film a bien été retiré de vos favoris.");
+        } else {
+          alert("Action effectuée avec succès.");
         }
+        C.showFavorites(profilId); // Recharge les favoris
       };
 
       C.getFeaturedMovies = async function () {
@@ -202,15 +221,11 @@
           return;
         }
 
-        try {
-          let response = await DataMovie.addRating(movieId, profileId, rating);
-          alert(response.message || "Note ajoutée avec succès.");
-          C.getAllMovies(); // Recharge la liste des films
-        } catch (error) {
-          console.error("Erreur lors de l'ajout de la note :", error);
-          alert("Une erreur est survenue lors de l'ajout de la note.");
-        }
+        let response = await DataMovie.addRating(movieId, profileId, rating);
+        alert(response.message || "Note ajoutée avec succès.");
+        C.handlerDetail();
       };
+
 
       window.V = {};
       /**
@@ -236,7 +251,7 @@
       };
 
       V.renderMovieDetail = function (movieData) {
-        let content = document.querySelector("#content"); // Assurez-vous que l'élément cible est correct
+        let content = document.querySelector("#content");
         content.innerHTML = MovieDetail.format(movieData);
       };
 

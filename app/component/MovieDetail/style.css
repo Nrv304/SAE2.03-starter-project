@@ -176,3 +176,15 @@
     background-color: var(--color-secondary);
     transform: scale(1.05);
 }
+
+.new-tag {
+    display: inline-block;
+    background-color: var(--color-primary);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+    margin-left: 10px;
+    text-transform: uppercase;
+}

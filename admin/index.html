@@ -11,6 +11,7 @@
     <section id="movieform"></section>
     <section id="addProfile"></section>
     <section id="searchMovies"></section>
+    <section id="moderate-comments"></section>
     
 
     <script type="module">
@@ -20,7 +21,9 @@
       import { SearchMovie } from "./component/SearchMovie/script.js";
       import { DataMovie } from "./data/dataMovie.js";
       import { DataProfile } from "./data/dataProfile.js";
+      import { ModerateComments } from "./component/ModerateComments/script.js";
 
+      window.ModerateComments = ModerateComments;
       window.C = {};
 
       C.handlerAddMovie = async function () {
@@ -69,6 +72,7 @@
         V.renderAddMovie ("C.handlerAddMovie()");
         V.renderAddProfile("C.handlerAddProfile()");
         V.renderSearchMovies();
+        V.renderModerateComments();
       };
 
       window.V = {};
@@ -98,6 +102,21 @@
               <div class="movieSearch__results"></div> <!-- Conteneur pour les résultats -->
           `;
           SearchMovie.init(); 
+      };
+
+      V.renderModerateComments = async function () {
+          let content = document.querySelector("#moderate-comments");
+          content.innerHTML = `
+              <div class="moderate-comments">
+                  <h3>Modération des commentaires</h3>
+                  <div id="comments-list">
+                      <p>Chargement des commentaires en attente...</p>
+                  </div>
+              </div>
+          `;
+
+          // Charger les commentaires en attente via ModerateComments
+          await ModerateComments.loadComments();
       };
 
       C.start();

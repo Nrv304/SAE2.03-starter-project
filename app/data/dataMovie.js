@@ -12,9 +12,13 @@ DataMovie.requestMovieDetails = async function (movieId) {
   let answer = await fetch(`${HOST_URL}/script.php?todo=readMovieDetail&id=${movieId}`);
   let movieDetails = await answer.json();
 
-  let averageRating = await fetch(`${HOST_URL}/script.php?todo=getAverageRating&movie_id=${movieId}`);
+  if (movieDetails.error) {
+    throw new Error(movieDetails.error);
+  }
+
+  let averageRating = await fetch(`${HOST_URL}/script.php?todo=getAverageRating&id_movie=${movieId}`);
   movieDetails.average_rating = await averageRating.json();
-  
+
   return movieDetails;
 };
 
@@ -67,6 +71,28 @@ DataMovie.addRating = async function (movieId, profileId, rating) {
   let response = await fetch(url);
   let jsonResponse = await response.json();
   return jsonResponse;
+};
+
+DataMovie.addComment = async function (movieId, profileId, commentText) {
+  const url = `${HOST_URL}/script.php?todo=addComment&id_movie=${movieId}&id_profile=${profileId}&comment_text=${encodeURIComponent(commentText)}`;
+  let response = await fetch(url);
+  let jsonResponse = await response.json();
+  return jsonResponse;
+};
+
+DataMovie.getComments = async function (movieId) {
+  const url = `${HOST_URL}/script.php?todo=getComments&id_movie=${movieId}`;
+  let response = await fetch(url);
+  let comments = await response.json();
+  return comments;
+};
+
+DataMovie.getRecentMovies = async function () {
+  const url = `${HOST_URL}/script.php?todo=getRecentMovies`;
+  const response = await fetch(url);
+  const recentMovies = await response.json();
+  console.log("Réponse du backend pour les films récents :", recentMovies); // Vérifiez ici
+  return recentMovies;
 };
 
 export { DataMovie };

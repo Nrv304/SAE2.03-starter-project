@@ -1,3 +1,5 @@
+import { MovieComment } from "../MovieComment/script";
+
 let templateFile = await fetch("./component/MovieDetail/template.html");
 let template = await templateFile.text();
 
@@ -16,8 +18,12 @@ MovieDetail.format = function (film) {
   html = html.replace("{{image}}", film.image);
   html = html.replace("{{onclick}}", `C.addRating(${film.id})`);
 
+  const newTag = isRecent ? `<span class="new-tag">New</span>` : "";
+  html = html.replace("{{newTag}}", newTag);
+
   let averageRating = film.average_rating ||  0;
   html = html.replace("{{averageRating}}", averageRating);
+  html += MovieComment.format(film.id);
 
   return html;
 };

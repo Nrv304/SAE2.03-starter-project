@@ -8,3 +8,4 @@
 @import "../component/MovieForm/style.css" layer(components);
 @import "../component/ProfileForm/style.css" layer(components);
 @import "../component/SearchMovie/style.css" layer(components);
+@import "../component/ModerateComments/style.css" layer(components);
