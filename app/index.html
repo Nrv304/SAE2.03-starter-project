@@ -139,11 +139,10 @@
       });
 
       C.getAllMovies = async function () {
-        const age = C.getSelectedProfileAge();
-        let data = await DataMovie.requestMovieCategory(age);
-        console.log("Données reçues :", data);
-        V.renderMoviesCategory(data);
-      };
+    const age = C.getSelectedProfileAge();
+    let data = await DataMovie.requestMovieCategory(age);
+    V.renderMoviesCategory(data);
+};
 
       C.addFavorites = async function (movieId) {
         const profileId = C.getSelectedProfileId();

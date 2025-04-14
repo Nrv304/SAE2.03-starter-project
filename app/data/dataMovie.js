@@ -26,6 +26,7 @@ DataMovie.requestMovieCategory = async function (age) {
   const url = `${HOST_URL}/script.php?todo=getMovieCategory&age=${age}`;
   let answer = await fetch(url);
   let movieCategory = await answer.json();
+  console.log("Données des catégories de films :", movieCategory); // Vérifiez ici
   return movieCategory;
 };
 
@@ -87,12 +88,5 @@ DataMovie.getComments = async function (movieId) {
   return comments;
 };
 
-DataMovie.getRecentMovies = async function () {
-  const url = `${HOST_URL}/script.php?todo=getRecentMovies`;
-  const response = await fetch(url);
-  const recentMovies = await response.json();
-  console.log("Réponse du backend pour les films récents :", recentMovies); // Vérifiez ici
-  return recentMovies;
-};
 
 export { DataMovie };

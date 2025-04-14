@@ -83,9 +83,11 @@ function addProfileController(){
 
     if ($ok != 0) {
         echo json_encode(["success" => true, "message" => "$name a été ajouté avec succès"]);
+        exit;
     } else {
         http_response_code(500); // Erreur interne
         echo json_encode(["error" => "Le profil n'a pas pu être ajouté"]);
+        exit;
     }
 }
 

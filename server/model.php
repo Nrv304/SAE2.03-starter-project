@@ -61,7 +61,8 @@ function getMovieDetail($id) {
                 Movie.trailer, 
                 Movie.min_age, 
                 Movie.id_category, 
-                Category.name AS category
+                Category.name AS category,
+                (Movie.created_at) >= DATE_SUB(NOW(), INTERVAL 7 DAY) AS is_new
             FROM Movie
             JOIN Category ON Movie.id_category = Category.id
             WHERE Movie.id = :id";
@@ -83,7 +84,8 @@ function getMoviesCategory($age) {
                 Category.name AS category_name, 
                 Movie.id AS movie_id, 
                 Movie.name AS movie_name, 
-                Movie.image AS movie_image
+                Movie.image AS movie_image,
+                (Movie.created_at) >= DATE_SUB(NOW(), INTERVAL 7 DAY) AS is_new
             FROM Movie
             JOIN Category ON Movie.id_category = Category.id
             WHERE :age = 0 OR Movie.min_age <= :age
@@ -94,40 +96,54 @@ function getMoviesCategory($age) {
     $stmt->execute();
     $rows = $stmt->fetchAll(PDO::FETCH_OBJ);
 
-    $categories = array_reduce($rows, function ($carry, $row) {
-        if (!isset($carry[$row->category_id])) {
-            $carry[$row->category_id] = [
+    
+    if (empty($rows)) {
+        return [];
+    }
+    $categories = [];
+    foreach ($rows as $row) {
+        if (!isset($categories[$row->category_id])) {
+            $categories[$row->category_id] = [
                 "name" => $row->category_name,
                 "movies" => []
             ];
         }
-        $carry[$row->category_id]["movies"][] = [
+        $categories[$row->category_id]["movies"][] = [
             "id" => $row->movie_id,
             "name" => $row->movie_name,
-            "image" => $row->movie_image
+            "image" => $row->movie_image,
+            "is_new" => (bool)$row->is_new
         ];
-        return $carry;
-    }, []);
+    }
 
     return array_values($categories);
 }
 
 function addProfile($id, $name, $avatar, $min_age) {
     $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    $cnx->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "REPLACE INTO Profil (id, name, avatar, min_age) 
-            VALUES (:id, :name, :avatar, :min_age)";
-
+    $sql = "INSERT INTO Profil (id, name, avatar, min_age)
+                VALUES (:id, :name, :avatar, :min_age)
+                ON DUPLICATE KEY UPDATE name = VALUES(name), avatar = VALUES(avatar), min_age = VALUES(min_age)";
     $stmt = $cnx->prepare($sql);
 
-    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    if ($id === null || $id === '') {
+        $stmt->bindValue(':id', null, PDO::PARAM_NULL);
+    } else {
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    }
+
     $stmt->bindParam(':name', $name, PDO::PARAM_STR);
     $stmt->bindParam(':avatar', $avatar, PDO::PARAM_STR);
     $stmt->bindParam(':min_age', $min_age, PDO::PARAM_INT);
 
     $stmt->execute();
+
     return $stmt->rowCount();
 }
+
+
 
 function getProfiles() {
         $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);

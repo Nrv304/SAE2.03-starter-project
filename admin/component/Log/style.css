@@ -45,3 +45,16 @@
     opacity: 1;
   }
 }
+
+@media (max-width: 768px) {
+  .log {
+    width: 90%;
+    height: 6rem; 
+    padding: 0.5rem 1rem; 
+    font-size: 0.9rem;
+  }
+
+  .log__list {
+    font-size: 0.8rem; 
+  }
+}

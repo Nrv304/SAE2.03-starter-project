@@ -18,7 +18,7 @@ MovieDetail.format = function (film) {
   html = html.replace("{{image}}", film.image);
   html = html.replace("{{onclick}}", `C.addRating(${film.id})`);
 
-  const newTag = isRecent ? `<span class="new-tag">New</span>` : "";
+  const newTag = film.is_new ? `<span class="tag-new">New</span>` : "";
   html = html.replace("{{newTag}}", newTag);
 
   let averageRating = film.average_rating ||  0;

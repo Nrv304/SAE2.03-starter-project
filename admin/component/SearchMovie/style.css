@@ -56,3 +56,19 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
+
+  @media (max-width: 768px) {
+    #searchMovies {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    #searchKeyword {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+  
+    .searchResults {
+      grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+    }
+  }

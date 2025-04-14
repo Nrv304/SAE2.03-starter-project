@@ -23,24 +23,16 @@ Films.format = function (films, profileId, favorites, recentMovies = []) {
         filmHtml = filmHtml.replace("{{handler}}", `C.handlerDetail(${movie.id})`);
 
         // Vérifiez si le film est récent
-        const isRecent = recentMovies.some(recent => recent.id === movie.id);
-        const newTag = isRecent ? `<span class="new-tag">New</span>` : "";
+        const newTag = movie.is_new ? `<span class="tag-new">New</span>` : "";
         filmHtml = filmHtml.replace("{{newTag}}", newTag);
 
-        let isFavorite = false;
-        for (let fav of favorites) {
-            if (fav.id === movie.id) {
-                isFavorite = true;
-                break;
-            }
-        }
-
-        const favoritebutton = isFavorite
-            ? `<button disabled> Favoris</button>`
+        // Vérifiez si le film est un favori
+        const isFavorite = favorites.some(fav => fav.id === movie.id);
+        const favoriteButton = isFavorite
+            ? `<button disabled>Favori</button>`
             : `<button class="add-to-favorites-button" onclick="C.addFavorites(${movie.id}, ${profileId})">Ajouter aux favoris</button>`;
 
-        filmHtml = filmHtml.replace("{{button}}", favoritebutton);
-         console.log(`Film : ${movie.name}, Est récent : ${isRecent}`);
+        filmHtml = filmHtml.replace("{{button}}", favoriteButton);
 
         allFilmsHtml += filmHtml;
     }

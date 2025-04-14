@@ -177,7 +177,7 @@
     transform: scale(1.05);
 }
 
-.new-tag {
+.tag-new {
     display: inline-block;
     background-color: var(--color-primary);
     color: white;
@@ -187,4 +187,69 @@
     border-radius: 5px;
     margin-left: 10px;
     text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .movie-info {
+        padding: 20px;
+        margin: 20px auto;
+    }
+
+    .movie-title {
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+
+    .movie-poster {
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .movie-description {
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+
+    .movie-details {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .movie-details li {
+        flex: 1 1 100%;
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+
+    .movie-trailer {
+        max-width: 100%;
+        margin: 20px auto;
+    }
+
+    .movie-trailer iframe {
+        height: 250px;
+    }
+
+    .movie-rating {
+        padding: 15px;
+        margin-top: 20px;
+    }
+
+    #rating-interface {
+        gap: 10px;
+    }
+
+    #rating-interface label {
+        font-size: 1rem;
+    }
+
+    #rating-interface select {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    #rating-interface button {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+    }
 }
