@@ -1,4 +1,4 @@
-import { MovieComment } from "../MovieComment/script";
+import { MovieComment } from "../MovieComment/script.js";
 
 let templateFile = await fetch("./component/MovieDetail/template.html");
 let template = await templateFile.text();

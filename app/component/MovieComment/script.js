@@ -1,4 +1,4 @@
-import { DataMovie } from "../../data/dataMovie";
+import { DataMovie } from "../../data/dataMovie.js";
 
 let templateFile = await fetch("./component/MovieComment/template.html");
 let template = await templateFile.text();
