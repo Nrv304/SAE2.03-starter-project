@@ -1,26 +1,35 @@
 <nav class="navbar font-sans">
-  <img src="../server/images/ArteLogo.png" alt="" class="navbar__logo" onclick="{{hHome}}" />
+  <div class="navbar__left">
+    <img src="../server/images/ArteLogo.png" alt="" class="navbar__logo" onclick="{{hHome}}" />
+    <button class="navbar__burger" onclick="C.toggleBurgerMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
   <ul class="navbar__list">
     <li class="navbar__item" onclick="{{hHome}}">Home</li>
     <li class="navbar__item" onclick="{{hAbout}}">About</li>
-    <li class="navbar__item" onclick="C.showFavorites(C.getSelectedProfileId())">Mes film</li>
+    <li class="navbar__item" onclick="C.showFavorites(C.getSelectedProfileId())">Mes films</li>
   </ul>
-  <div class="navbar__search-container">
-    <div class="navbar__search" style="display: none;">
-      <input 
+  <div class="navbar__right">
+    <div class="navbar__search-container">
+      <div class="navbar__search" style="display: none;">
+        <input 
         type="text" 
         id="search-input" 
         placeholder="Rechercher un film avec un titre..." 
-      />
-      <button onclick="C.searchMovies()">Rechercher</button>
+        />
+        <button onclick="C.searchMovies()">Rechercher</button>
+      </div>
+      <img src="../server/images/loupe.png" alt="" class="navbar__search-icon" onclick="C.toggleSearchBar()" />
     </div>
-    <img src="../server/images/loupe.png" alt="" class="navbar__search-icon" onclick="C.toggleSearchBar()" />
-  </div>
-  <div class="navbar__profile-container">
-    <img id="profile-image" src="../server/images/default-avatar.jpg" alt="Avatar du profil" class="navbar__profile-avatar" onclick="C.toggleProfileSelect()" />
-    <select class="navbar__profile-select" style="display: none;" onchange="C.handlerProfileSelect(this)">
-      <option value="" disabled selected>Choisir un profil</option>
-      {{profileOptions}}
-    </select>
+    <div class="navbar__profile-container">
+      <img id="profile-image" src="../server/images/default-avatar.jpg" alt="Avatar du profil" class="navbar__profile-avatar" onclick="C.toggleProfileSelect()" />
+      <select class="navbar__profile-select" style="display: none;" onchange="C.handlerProfileSelect(this)">
+        <option value="" disabled selected>Choisir un profil</option>
+        {{profileOptions}}
+      </select>
+    </div>
   </div>
 </nav>

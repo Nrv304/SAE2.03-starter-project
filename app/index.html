@@ -241,6 +241,10 @@
         }
       };
 
+      C.toggleBurgerMenu = function () {
+        const navbarList = document.querySelector(".navbar__list");
+        navbarList.style.display = navbarList.style.display === "flex" ? "none" : "flex";
+      };
 
       window.V = {};
       /**
@@ -271,22 +275,35 @@
       };
 
       V.renderFavorites = function (favorites) {
-        let content = document.querySelector("#content");
-        content.innerHTML = "";
+  let content = document.querySelector("#content");
+  content.innerHTML = "";
 
-        if (favorites.length === 0) {
-          content.innerHTML = "<p class='favorite__empty'>Aucun film dans les favoris.</p>";
-          return;
-        }
+  if (favorites.length === 0) {
+    content.innerHTML = "<p class='favorite__empty'>Aucun film dans les favoris.</p>";
+    return;
+  }
 
-        let favoriteHtml = "<div class='favorite-list'>";
-        for (let i = 0; i < favorites.length; i++) {
-          let fav = favorites[i];
-          favoriteHtml += `<div class="favorite-item">${MovieFavorite.formatLi(fav)}</div>`;
-        }
-        favoriteHtml += "</div>";
-        content.innerHTML = favoriteHtml;
-      };
+  let favoriteHtml = `
+    <h2 class="favorite__titre">Mes films</h2>
+    <div class="carousel-wrapper">
+      <button class="caousel-btn left" onclick="scrollCarousel(this, 'left')">&#10094;</button>
+      <div class="movie-category__list">
+  `;
+
+  for (let i = 0; i < favorites.length; i++) {
+    let fav = favorites[i];
+    favoriteHtml += `<div class="favorite-item">${MovieFavorite.formatLi(fav)}</div>`;
+  }
+
+  favoriteHtml += `
+      </div>
+      <button class="caousel-btn right" onclick="scrollCarousel(this, 'right')">&#10095;</button>
+    </div>
+  `;
+
+  content.innerHTML = favoriteHtml;
+};
+
 
       V.renderFeaturedMovies = function (movies) {
         let content = document.querySelector("#featured");
@@ -295,17 +312,24 @@
 
 
       window.scrollCarousel = function (btn, direction) {
-        const container = btn.closest(".carousel-wrapper").querySelector(".movie-category__list");
-        if (!container) {
+        const wrapper = btn.closest(".carousel-wrapper");
+        if (!wrapper) {
           console.error("Le conteneur du carrousel est introuvable.");
           return;
         }
-        const scrollAmount = 300;
+
+        const container = wrapper.querySelector(".movie-category__list");
+        if (!container) {
+          console.error("La liste du carrousel est introuvable.");
+          return;
+        }
+
+        const scrollAmount = 300; // Distance de défilement
         container.scrollBy({
           left: direction === "left" ? -scrollAmount : scrollAmount,
           behavior: "smooth",
         });
-      }
+      };
       C.start(); // Démarre l'application
     </script>
   </body>

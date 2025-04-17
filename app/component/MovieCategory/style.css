@@ -1,13 +1,13 @@
 .movie-category {
-  margin: 4rem;
+  margin: 1rem;
 }
 
 .movie-category__title {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: bold;
   color: white;
   font-family: var(--ff-sans);
-  margin: 0rem;
+  margin: 0;
 }
 
 .carousel-wrapper {
@@ -21,27 +21,27 @@
   display: flex;
   overflow-x: auto;
   scroll-behavior: smooth;
-  gap: 1rem;
+  gap: 0.5rem;
   padding-bottom: 10px;
-  scrollbar-width: none;
+  scrollbar-width: none; /* Masque la barre de défilement */
 }
 
 .movie-category__list::-webkit-scrollbar {
-  display: none;
+  display: none; /* Masque la barre de défilement pour les navigateurs Webkit */
 }
 
 .caousel-btn {
   background-color: var(--color-white);
   border: none;
   color: var(--color-black);
-  font-size: 1rem;
+  font-size: 0.8rem;
   cursor: pointer;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 2;
-  border-radius: 100%;
+  border-radius: 50%;
   transition: transform 0.2s ease;
 }
 
@@ -49,11 +49,30 @@
   transform: translateY(-50%) scale(1.2);
 }
 
-
 .caousel-btn.left {
   left: 0;
 }
 
 .caousel-btn.right {
   right: 0;
+}
+
+/* Styles pour les écrans plus larges */
+@media screen and (min-width: 768px) {
+  .movie-category {
+    margin: 4rem;
+  }
+
+  .movie-category__title {
+    font-size: 24px;
+  }
+
+  .movie-category__list {
+    gap: 1rem;
+  }
+
+  .caousel-btn {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
 }
