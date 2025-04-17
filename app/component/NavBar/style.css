@@ -1,147 +1,95 @@
+/* Barre de navigation */
 .navbar {
   display: flex;
   align-items: center;
-  padding: 1rem 3rem;
-  color: var(--color-primary);
-  background-color: var(--color-bg);
-
-  .navbar__item {
-    --_offset: 0.2rem;
-    padding: 0.5rem 1rem;
-    font-family: var(--ff-outfit);
-    font-size: 1.5rem;
-    text-decoration: underline;
-    text-decoration-thickness: 0.1rem;
-    text-underline-offset: var(--_offset);
-    cursor: pointer;
-    transition: text-underline-offset 0.2s ease-in-out;
-    &:hover {
-      --_offset: 0.5rem;
-    }
-  }
+  background-color: var(--color-black);
+  height: 52px;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
+/* Logo */
+.navbar__logo {
+  height: 50px;
+  margin-right: 4rem;
+  margin-left: 2rem;
+}
+
+/* Liste des liens */
 .navbar__list {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.navbar__profile-select {
+.navbar__item {
+  margin-right: 20px;
+  cursor: pointer;
+  font-size: 19px;
+  transition: color 0.3s ease;
+}
+
+.navbar__item:hover {
+  color: #8b8b8b; /* Couleur orange ARTE */
+}
+
+/* Recherche */
+.navbar__search-container {
+  display: flex;
+  align-items: center;
   margin-left: auto;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border: 1px solid var(--color-primary);
-  border-radius: 4px;
-  background-color: var(--color-bg);
-  color: var(--color-primary);
+  margin-right: 1rem;
+}
+
+.navbar__search-icon {
+  background: none;
+  border: none;
+  width: 40px;
+  color: white;
   cursor: pointer;
 }
 
+/* Barre de recherche (apparition conditionnelle) */
+.navbar__search {
+  background-color: var(--color-white);
+  padding: 2px;
+}
+
+.navbar__search input {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  padding: 5px; 
+  width: 700px;
+  height: 50px;
+  font-size: 14px;
+  border: none;
+  outline: none;
+}
+
+/* Profil */
 .navbar__profile-container {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-left: auto;
+  position: relative;
 }
 
 .navbar__profile-avatar {
   width: 40px;
-  height: 40px;
   border-radius: 50%;
-  border: 2px solid var(--color-primary);
-}
-
-.navbar__profile-avatar:hover {
-  transform: scale(1.05);
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.navbar__search {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-left: auto;
-}
-
-.navbar__search input[type="text"] {
-  width: 300px;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border: 2px solid var(--color-primary);
-  border-radius: 4px;
-  background-color: var(--color-bg);
-  color: var(--color-primary);
-  outline: none;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.navbar__search input[type="text"]:focus {
-  border-color: var(--color-secondary);
-  box-shadow: 0 0 5px var(--color-secondary);
-}
-
-.navbar__search button {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  font-weight: bold;
-  color: var(--color-bg);
-  background-color: var(--color-primary);
-  border: none;
-  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.navbar__search button:hover {
-  background-color: var(--color-secondary);
-  transform: scale(1.05);
-}
-
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 1rem;
-  }
-
-  .navbar__list {
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
-  }
-
-  .navbar__item {
-    font-size: 1.2rem;
-    text-align: left;
-    padding: 0.5rem 0;
-    width: 100%;
-    border-bottom: 1px solid var(--color-primary);
-  }
-
-  .navbar__search {
-    width: 100%;
-    margin-top: 1rem;
-  }
-
-  .navbar__search input[type="text"] {
-    width: 100%;
-  }
-
-  .navbar__profile-container {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-    margin-top: 1rem;
-    width: 100%;
-  }
-
-  .navbar__profile-select {
-    width: 100%;
-  }
-
-  .navbar__profile-avatar {
-    align-self: flex-start;
-  }
+.navbar__profile-select {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  display: none;
+  background-color: #222;
+  color: white;
+  border: none;
+  padding: 5px;
+  font-size: 14px;
 }

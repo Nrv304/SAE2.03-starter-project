@@ -11,6 +11,8 @@ ul {
 }
 
 body {
+  overflow: visible;
+  margin: 0;
   background-color: var(--color-black);
 }
 

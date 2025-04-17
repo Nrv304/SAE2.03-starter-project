@@ -1,31 +1,26 @@
+<div class="movie-trailer">
+    <iframe 
+        src="{{movieTrailerUrl}}" 
+        title="Trailer de {{movieTitle}}" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+    </iframe>
+</div>
     <div class="movie-info">
         <h1 class="movie-title">{{movieTitle}} {{newTag}}</h1>
-        <div class="movie-poster">
-            <img src="../server/images/{{image}}" alt="Affiche de {{movieTitle}}">
-        </div>
-        <p class="movie-description">{{movieDescription}}</p>
+        <div class="add-to-favorites">{{button}}</div>
         <ul class="movie-details">
-            <li><strong>Réalisateur :</strong> {{movieDirector}}</li>
-            <li><strong>Année de sortie :</strong> {{movieReleaseYear}}</li>
-            <li><strong>Catégorie :</strong> {{movieCategory}}</li>
-            <li><strong>Restrictions d'âge :</strong> {{movieAgeRestriction}}</li>
+            <li>{{movieDirector}}</li>
+            <li>{{movieReleaseYear}}</li>
+            <li>{{movieCategory}}</li>
+            <li>{{movieAgeRestriction}}</li>
         </ul>
+        <p class="movie-description">{{movieDescription}}</p>
     </div>
 
-    <div class="movie-trailer">
-        <h2>Trailer</h2>
-        <iframe 
-            width="560" 
-            height="315" 
-            src="{{movieTrailerUrl}}" 
-            title="Trailer de {{movieTitle}}" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen>
-        </iframe>
-    </div>
     <div class="movie-rating">
-        <h2>Noter le film</h2>
+        <h2 class="rating-title">Noter le film</h2>
         <p class="average-rating">Note moyenne : <span id="average-rating">{{averageRating}}</span>/10</p>
         <div id="rating-interface">
             <label for="rating">Votre note :</label>
@@ -41,6 +36,7 @@
                 <option value="9">9</option>
                 <option value="10">10</option>
             </select>
-            <button onclick="{{onclick}}">Noter</button>
+            <button class="rate-button" onclick="{{onclick}}">Noter</button>
         </div>
-</div>
+    </div>
+    

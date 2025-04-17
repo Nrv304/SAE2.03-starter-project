@@ -86,10 +86,8 @@
       C.getSelectedProfileId = function () {
         const profileSelect = document.querySelector(".navbar__profile-select");
         if (profileSelect) {
-          console.log("Profil sélectionné :", profileSelect.value);
           return profileSelect.value || null;
         }
-        console.log("Aucun profil sélectionné.");
         return null;
       };
 
@@ -225,6 +223,24 @@
         C.handlerDetail();
       };
 
+      C.toggleSearchBar = function () {
+        const searchBar = document.querySelector(".navbar__search");
+        if (searchBar.style.display === "none" || !searchBar.style.display) {
+          searchBar.style.display = "flex";
+        } else {
+          searchBar.style.display = "none";
+        }
+      };
+
+      C.toggleProfileSelect = function () {
+        const profileSelect = document.querySelector(".navbar__profile-select");
+        if (profileSelect.style.display === "none" || !profileSelect.style.display) {
+          profileSelect.style.display = "block";
+        } else {
+          profileSelect.style.display = "none";
+        }
+      };
+
 
       window.V = {};
       /**
@@ -277,6 +293,19 @@
         content.innerHTML = FeaturedMovies.formatLi(movies);
       };
 
+
+      window.scrollCarousel = function (btn, direction) {
+        const container = btn.closest(".carousel-wrapper").querySelector(".movie-category__list");
+        if (!container) {
+          console.error("Le conteneur du carrousel est introuvable.");
+          return;
+        }
+        const scrollAmount = 300;
+        container.scrollBy({
+          left: direction === "left" ? -scrollAmount : scrollAmount,
+          behavior: "smooth",
+        });
+      }
       C.start(); // Démarre l'application
     </script>
   </body>

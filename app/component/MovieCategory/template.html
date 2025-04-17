@@ -1,6 +1,10 @@
 <div class="movie-category">
     <h2 class="movie-category__title">{{categoryName}}</h2>
+    <div class="carousel-wrapper">
+    <button class="caousel-btn left" onclick="scrollCarousel(this, 'left')">&#10094;</button>
     <div class="movie-category__list">
       {{eachMovies}}
     </div>
+    <button class="caousel-btn right" onclick="scrollCarousel(this, 'right')">&#10095;</button>
+  </div>
   </div>

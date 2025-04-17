@@ -3,10 +3,9 @@
 
 :root {
   /* Primitive Tokens */
-  --color-black: hsl(0, 0%, 0%);
+  --color-black:  hsl(0, 0%, 7%);
   --color-white: hsl(0, 0%, 100%);
   --color-gray-light: hsl(0, 0%, 80%);
-  --color-gray: hsla(0, 0%, 0%, 0.699);
   --color-gray-dark: hsl(0, 0%, 20%);
   --color-secondary: hsl(36, 83%, 64%);
   --color-primary: hsl(36, 100%, 50%);

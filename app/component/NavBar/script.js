@@ -20,7 +20,7 @@ NavBar.format = async function (hAbout, hHome) {
 
  
   html = html.replace("{{hAbout}}", hAbout);
-  html = html.replace("{{hHome}}", hHome);
+  html = html.replace(/{{hHome}}/g, hHome);
   html = html.replace("{{profileOptions}}", profileOptions);
   let image = profiles[0]?.avatar|| "";
   html = html.replace("{{image}}", image);
